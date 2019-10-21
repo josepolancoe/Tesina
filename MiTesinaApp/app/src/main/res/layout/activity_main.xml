@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="50dp"
+    android:background="@drawable/bg_login_01"
+    tools:context=".MainActivity">
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="30dp">
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="155dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#000000"/>
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="17dp"
+            android:text="O"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="155dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#000000"/>
+
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/txt_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:background="@drawable/gb_edit_text"
+        android:ems="10"
+        android:hint="@string/txt_nombre_usuario_correo"
+        android:inputType="textPersonName"
+        android:drawableStart="@drawable/ic_user_black"/>
+
+    <EditText
+        android:id="@+id/txt_contraseña"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/gb_edit_text"
+        android:ems="10"
+        android:hint="@string/txt_contraseña"
+        android:textAlignment="center"
+        android:drawableStart="@drawable/ic_password_black"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_iniciar_sesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_iniciar_sesion"
+        android:background="@drawable/btn_login"
+        android:textColor="@drawable/txt_login"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_olvide_contraseña"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:text="@string/txt_no_tienes_una_cuenta"
+            android:layout_marginRight="30dp"/>
+
+        <TextView
+            android:id="@+id/txt_login_registrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_registrate"
+            android:textColor="#147ade"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
