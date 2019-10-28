@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_reserva"
+    android:title="Reservar"
+    android:icon="@drawable/ic_home_black_24dp"/>
+
+    <item android:id="@+id/nav_mapa"
+        android:title="Mapa"
+        android:icon="@drawable/ic_map_black_24dp"/>
+
+    <item android:id="@+id/nav_mensajes"
+        android:title="Mensajes"
+        android:icon="@drawable/ic_mensaje_black_24dp"/>
+
+    <item android:id="@+id/nav_perfil"
+        android:title="Perfil"
+        android:icon="@drawable/ic_perfil_black_24dp"/>
+</menu>
