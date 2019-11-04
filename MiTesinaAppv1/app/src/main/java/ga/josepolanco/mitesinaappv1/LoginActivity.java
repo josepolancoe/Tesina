@@ -20,6 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,12 +38,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,6 +66,10 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
+    private CallbackManager mCallbackManager;
+
+    private static final String TAG = "FacebookLogin";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +78,12 @@ public class LoginActivity extends AppCompatActivity {
 
         //barra de accion y titulo
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Login");
+        //actionBar.setTitle("Login");
 
 
         //Activar boton de retroceso
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayShowHomeEnabled(true);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -116,6 +132,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                     Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        // Initialize Facebook Login button
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = findViewById(R.id.login_facebook);
+        loginButton.setReadPermissions("email");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                // ...
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                // ...
             }
         });
 
@@ -259,8 +296,66 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
 
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                                //obtener correo de usuario y llave
+                                String email = user.getEmail();
+                                String uid = user.getUid();
+
+                                //cuando el usuario está registrado, almacena la información del usuario en la base de datos en tiempo real de Firebase también usando HashMap
+                                HashMap<Object, String> hashMap = new HashMap<>();
+                                //subimos informacion en hasmap
+                                hashMap.put("correo",email);
+                                hashMap.put("uid",uid);
+                                hashMap.put("nombres","");
+                                hashMap.put("apellidos","");
+                                hashMap.put("sexo","");
+                                hashMap.put("fecha-de-nacimiento","");
+                                hashMap.put("telefono","");
+                                hashMap.put("contacto-de-emergencia","");
+                                hashMap.put("imagen","");
+
+                                //intanciamos la base de dato
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                //ruta para almacenar datos de usuario denominados usuarios
+                                DatabaseReference reference = database.getReference("Usuarios");
+                                //poner datos dentro de hashmap en la base de datos
+                                reference.child(uid).setValue(hashMap);
+                            }
+
+                            Toast.makeText(LoginActivity.this, "Correo "+user.getEmail(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, PerfilActivity.class));
+                            finish();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Inicio Fallido...", Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, "ERROR DESCONOCIDO "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        Toast.makeText(LoginActivity.this, ""+token, Toast.LENGTH_SHORT).show();
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+
                             //obtener correo de usuario y llave
                             String email = user.getEmail();
+                            Log.d(TAG,  email);
+                            Toast.makeText(LoginActivity.this, email, Toast.LENGTH_SHORT).show();
                             String uid = user.getUid();
 
                             //cuando el usuario está registrado, almacena la información del usuario en la base de datos en tiempo real de Firebase también usando HashMap
@@ -286,18 +381,14 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Correo "+user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, PerfilActivity.class));
                             finish();
-                            //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Inicio Fallido...", Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, "ERROR DESCONOCIDO "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                });
     }
+
+
 }

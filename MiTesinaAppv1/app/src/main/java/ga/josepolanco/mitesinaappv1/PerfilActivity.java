@@ -19,20 +19,20 @@ import ga.josepolanco.mitesinaappv1.Fragments.MensajesFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.PerfilFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.ReservaFragment;
 
-public class PerfilActivity extends AppCompatActivity {
+public class PerfilActivity extends AppCompatActivity{
 
     FirebaseAuth firebaseAuth;
-
     ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setTheme(R.style.AppTheme2);
         setContentView(R.layout.activity_perfil);
 
         //barra de acción y titulo
-        actionBar = getSupportActionBar();
-        actionBar.setTitle("Perfil");
+        //actionBar = getSupportActionBar();
+        //actionBar.setTitle("Perfil");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -40,7 +40,7 @@ public class PerfilActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         //Fragment Inicio Por defecto al iniciar
-        actionBar.setTitle("Reserva");
+        //actionBar.setTitle("Reserva");
         ReservaFragment reservaFragment = new ReservaFragment();
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.contenido_perfil, reservaFragment,"");
@@ -54,7 +54,7 @@ public class PerfilActivity extends AppCompatActivity {
             switch (menuItem.getItemId()){
                 case R.id.nav_reserva:
                     //Fragment Inicio transaccion
-                    actionBar.setTitle("Reserva");
+                    //actionBar.setTitle("Reserva");
                     ReservaFragment reservaFragment = new ReservaFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction1.replace(R.id.contenido_perfil, reservaFragment,"");
@@ -63,7 +63,7 @@ public class PerfilActivity extends AppCompatActivity {
 
                 case R.id.nav_mapa:
                     //Fragment Perfil transaccion
-                    actionBar.setTitle("Mapa");
+                    //actionBar.setTitle("Mapa");
                     MapaFragment mapaFragment = new MapaFragment();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.contenido_perfil, mapaFragment,"");
@@ -72,7 +72,7 @@ public class PerfilActivity extends AppCompatActivity {
 
                 case R.id.nav_mensajes:
                     //Fragment Mis Amigos transaccion
-                    actionBar.setTitle("Mensajes");
+                    //actionBar.setTitle("Mensajes");
                     MensajesFragment mensajesFragment = new MensajesFragment();
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.contenido_perfil, mensajesFragment,"");
@@ -81,7 +81,7 @@ public class PerfilActivity extends AppCompatActivity {
 
                 case R.id.nav_perfil:
                     //Fragment Mis Amigos transaccion
-                    actionBar.setTitle("Perfil");
+                    //actionBar.setTitle("Perfil");
                     PerfilFragment perfilFragment = new PerfilFragment();
                     FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction4.replace(R.id.contenido_perfil, perfilFragment,"");
@@ -132,4 +132,6 @@ public class PerfilActivity extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+
+
 }

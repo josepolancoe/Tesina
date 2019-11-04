@@ -1,17 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.PerfilFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ScrollView
+        android:id="@+id/perfil_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="110sp"
+                android:background="@drawable/fondo_borde">
+
+            </ImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120sp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20sp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/perfil_foto"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="20sp"
+                    android:src="@drawable/img_user"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FF000000"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/perfil_nombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:textSize="20sp"
+                        android:textColor="#FFFFFF"
+                        android:text="Nombre"/>
+
+                    <TextView
+                        android:id="@+id/perfil_celular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#FFFFFF"
+                        android:paddingLeft="10dp"
+                        android:text="Celular"/>
+
+                    <TextView
+                        android:id="@+id/perfil_correo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#FFFFFF"
+                        android:paddingLeft="10dp"
+                        android:text="Correo"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <GridLayout
+        android:id="@+id/idGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:text="Mi Perfil" />
+        android:padding="4dp"
+        android:columnCount="1"
+        android:rowCount="2"
+        android:layout_below="@+id/perfil_scrollView">
 
-</FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_perfil_menu01"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:padding="10dp"
+            app:cardBackgroundColor="@color/colorBlanco"
+            android:layout_marginBottom="10sp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="17dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/alojamiento_imagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/alojamiento_01"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/alojamiento_titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:textSize="20sp"
+                    android:text="Cuarto céntrico en Trujillo"
+                    android:layout_marginBottom="0dp"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+    </GridLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/perfil_flotante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_edit_white"/>
+
+</RelativeLayout>

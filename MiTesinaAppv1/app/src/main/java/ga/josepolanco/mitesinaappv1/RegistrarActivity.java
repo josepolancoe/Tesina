@@ -39,11 +39,11 @@ public class RegistrarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registrar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Crear Cuenta");
+        //actionBar.setTitle("Crear Cuenta");
 
         //Activar boton hacia atras
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayShowHomeEnabled(true);
 
         r_correo = findViewById(R.id.r_correo);
         r_clave = findViewById(R.id.r_clave);

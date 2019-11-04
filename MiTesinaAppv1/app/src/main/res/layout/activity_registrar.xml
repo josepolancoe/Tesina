@@ -19,7 +19,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/material_correo"
-        android:theme="@style/TextInputLayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -37,7 +36,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/material_clave"
-        android:theme="@style/TextInputLayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/material_correo"
