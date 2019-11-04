@@ -38,8 +38,8 @@
                     android:scaleType="centerCrop"
                     android:layout_marginStart="20sp"
                     android:src="@drawable/img_user"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FF000000"/>
+                    app:civ_border_width="3dp"
+                    app:civ_border_color="#ffffff"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,61 +79,137 @@
 
     </ScrollView>
 
-    <GridLayout
-        android:id="@+id/idGrid"
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="4dp"
-        android:columnCount="1"
-        android:rowCount="2"
+        app:columnCount="2"
+        app:rowCount="3"
         android:layout_below="@+id/perfil_scrollView">
 
-
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_perfil_menu01"
-            android:layout_gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:padding="10dp"
-            app:cardBackgroundColor="@color/colorBlanco"
-            android:layout_marginBottom="10sp">
+            android:id="@+id/card_perfil_anunciar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="17dp"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/alojamiento_imagen"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
+                    android:layout_height="75sp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/alojamiento_01"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/anunciar" />
 
                 <TextView
-                    android:id="@+id/alojamiento_titulo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:textSize="20sp"
-                    android:text="Cuarto céntrico en Trujillo"
-                    android:layout_marginBottom="0dp"
-                    android:textStyle="bold"
-                    />
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Anunciar un espacio"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card03"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:foreground="?selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="75sp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/anunciar" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:text="Opcion 2"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card02"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:foreground="?selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="75sp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/anunciar" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:text="Opcion 3"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
 
 
-
-
-    </GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/perfil_flotante"

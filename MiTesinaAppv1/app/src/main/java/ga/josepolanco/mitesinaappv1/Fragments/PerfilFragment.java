@@ -47,6 +47,7 @@ import com.squareup.picasso.Picasso;
 import java.security.Key;
 import java.util.HashMap;
 
+import ga.josepolanco.mitesinaappv1.AnunciarActivity;
 import ga.josepolanco.mitesinaappv1.MainActivity;
 import ga.josepolanco.mitesinaappv1.R;
 
@@ -60,6 +61,7 @@ import static com.google.firebase.storage.FirebaseStorage.getInstance;
 public class PerfilFragment extends Fragment {
     ImageView perfil_foto;
     TextView perfil_nombre, perfil_celular, perfil_correo;
+    CardView card_perfil_anunciar;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -118,6 +120,14 @@ public class PerfilFragment extends Fragment {
         perfil_correo = view.findViewById(R.id.perfil_correo);
         perfil_celular = view.findViewById(R.id.perfil_celular);
         floatingActionButton = view.findViewById(R.id.perfil_flotante);
+        card_perfil_anunciar = view.findViewById(R.id.card_perfil_anunciar);
+        card_perfil_anunciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), AnunciarActivity.class);
+                startActivity(intent);
+            }
+        });
         pd = new ProgressDialog(getActivity());
 
         Query query = databaseReference.orderByChild("correo").equalTo(firebaseUser.getEmail());
