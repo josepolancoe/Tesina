@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnunciarAlojamientoActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Seleccione el tipo de Aljamiento:"
+                            android:textStyle="bold"/>
+
+                        <RadioGroup
+                            android:id="@+id/rb_grupo1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rb_anunciar_departamento"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Departamento" />
+
+                            <RadioButton
+                                android:id="@+id/rb_anunciar_casa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Casa" />
+
+                            <RadioButton
+                                android:id="@+id/rb_anunciar_hotel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hotel Boutique" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Se reservará: "
+                            android:textStyle="bold"/>
+
+                        <RadioGroup
+                            android:id="@+id/rb_grupo2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rb_anunciar_alojamiento_entero"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Alojamiento entero" />
+
+                            <RadioButton
+                                android:id="@+id/rb_anunciar_habitacion_privada"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Habitación privada" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/anunciar_titulo2"
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:hint="Describe lo que pasó"
+                            android:inputType="text|textMultiLine"
+                            android:padding="5dp"
+                            android:gravity="top"/>
+
+                        <ImageView
+                            android:id="@+id/iv_anunciar_foto"
+                            android:layout_width="match_parent"
+                            android:layout_height="300sp"
+                            android:text="Seleccionar Foto"
+                            android:padding="15dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/upload_imagen"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"/>
+
+                        <Button
+                            android:id="@+id/btn_anunciar_publicar2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Publicar Denuncia"
+                            android:layout_marginTop="10dp"/>
+                    </LinearLayout>
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

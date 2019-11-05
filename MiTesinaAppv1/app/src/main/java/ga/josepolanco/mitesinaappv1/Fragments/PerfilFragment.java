@@ -23,7 +23,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -39,15 +38,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.security.Key;
 import java.util.HashMap;
 
-import ga.josepolanco.mitesinaappv1.AnunciarActivity;
+import ga.josepolanco.mitesinaappv1.AnunciarAlojamientoActivity;
 import ga.josepolanco.mitesinaappv1.MainActivity;
 import ga.josepolanco.mitesinaappv1.R;
 
@@ -124,7 +121,7 @@ public class PerfilFragment extends Fragment {
         card_perfil_anunciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), AnunciarActivity.class);
+                Intent intent=new Intent(getContext(), AnunciarAlojamientoActivity.class);
                 startActivity(intent);
             }
         });
@@ -351,7 +348,7 @@ public class PerfilFragment extends Fragment {
 
     private void editarNombreDialog(final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Editar Nombre"+ key);
+        builder.setTitle("Editar "+ key);
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setPadding(10,10,10,10);
