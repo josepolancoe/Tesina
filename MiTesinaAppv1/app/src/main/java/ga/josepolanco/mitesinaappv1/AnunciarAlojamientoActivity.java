@@ -47,7 +47,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     ImageView iv_anunciar_foto;
-    TextView anunciar_titulo2;
+    TextView anunciar_titulo2, anunciar_precio;
     Button btn_anunciar_publicar2;
 
 
@@ -68,7 +68,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
     Uri image_uri=null;
 
     //user info
-    String nombre,correo,uid,dp;
+    String nombre,correo,uid,imagen_perfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                      nombre = ""+snapshot.child("nombres").getValue();
                      correo = ""+snapshot.child("correo").getValue();
-                     dp = ""+snapshot.child("imagen").getValue();
+                    imagen_perfil = ""+snapshot.child("imagen").getValue();
                 }
             }
 
@@ -106,6 +106,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
 
         iv_anunciar_foto = findViewById(R.id.iv_anunciar_foto);
         anunciar_titulo2 = findViewById(R.id.anunciar_titulo2);
+        anunciar_precio = findViewById(R.id.anunciar_precio);
         rb_grupo1 = findViewById(R.id.rb_grupo1);
         rb_grupo2 = findViewById(R.id.rb_grupo2);
         rb_anunciar_departamento = findViewById(R.id.rb_anunciar_departamento);
@@ -121,6 +122,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 showImagePickDialog();
             }
         });
+        validarRb_grupo1();
+        validarRb_grupo2();
 
         btn_anunciar_publicar2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +131,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 validarRb_grupo1();
                 validarRb_grupo2();
                 if (rb_grupo1.getCheckedRadioButtonId() == -1){
-                    Toast.makeText(AnunciarAlojamientoActivity.this, "seleccione grupo1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnunciarAlojamientoActivity.this, "seleccione un tipo de alojamiento", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (rb_grupo2.getCheckedRadioButtonId() == -1)                {
@@ -137,9 +140,14 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 }
                 String titulo=anunciar_titulo2.getText().toString().trim();
                 if (TextUtils.isEmpty(titulo)){
-                    Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese titutlo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el titutlo", Toast.LENGTH_SHORT).show();
                     return;
                 }
+//                String precio=anunciar_precio.getText().toString().trim();
+//                if (TextUtils.isEmpty(precio)){
+//                    Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el precio", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 if (image_uri==null){
                     uploadData(titulo,"noImagen");
                 }else{
@@ -155,7 +163,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
 
         final String timeStamp = String.valueOf(System.currentTimeMillis());
 
-        String filePathAndName = "Posts/" + "post_" + timeStamp;
+        String filePathAndName = "Anuncios/" + "anuncio_" + timeStamp;
 
         if (!uri.equals("noImagen")){
             StorageReference reference = FirebaseStorage.getInstance().getReference().child(filePathAndName);
@@ -171,28 +179,29 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                             if (uriTask.isSuccessful()){
                                 //url recibida
                                 HashMap<Object, String> hashMap = new HashMap<>();
-                                hashMap.put("uid",uid);
-                                hashMap.put("uName",nombre);
-                                hashMap.put("uCorreo",correo);
-                                hashMap.put("uDp",dp);
-                                hashMap.put("pId", timeStamp);
-                                hashMap.put("pTitulo",titulo);
-                                hashMap.put("pImagen",downloadUri);
-                                hashMap.put("pTime",timeStamp);
-                                hashMap.put("tipo_alojamiento1",rbTipo1);
-                                hashMap.put("tipo_alojamiento2",rbTipo2);
+                                hashMap.put("anfitrion_uid",uid);
+                                hashMap.put("anfitrion_nombre",nombre);
+                                hashMap.put("anfitrion_correo",correo);
+                                hashMap.put("anfitrion_imagen",imagen_perfil);
+                                hashMap.put("anuncio_id", timeStamp);
+                                hashMap.put("anuncio_titulo",titulo);
+                                hashMap.put("anuncio_imagen_alojamiento",downloadUri);
+                                hashMap.put("anuncio_fecha",timeStamp);
+                                hashMap.put("tipo_alojamiento",rbTipo1);
+                                hashMap.put("detalle_tipo_alojamiento",rbTipo2);
 
                                 //publicamos archivo
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");
                                 ref.child(timeStamp).setValue(hashMap)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 //añadido a la base de datos
                                                 progressDialog.dismiss();
-                                                Toast.makeText(AnunciarAlojamientoActivity.this, "Alojamiento publicado", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AnunciarAlojamientoActivity.this, "Anuncio publicado", Toast.LENGTH_SHORT).show();
                                                 //reset View
                                                 anunciar_titulo2.setText("");
+                                                anunciar_precio.setText("");
                                                 iv_anunciar_foto.setImageURI(null);
                                                 image_uri=null;
                                                 rb_grupo1.clearCheck();
@@ -215,28 +224,29 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
             });
         }else{
             HashMap<Object, String> hashMap = new HashMap<>();
-            hashMap.put("uid",uid);
-            hashMap.put("uName",nombre);
-            hashMap.put("uCorreo",correo);
-            hashMap.put("uDp",dp);
-            hashMap.put("pId", timeStamp);
-            hashMap.put("pTitulo",titulo);
-            hashMap.put("pImagen","noImagen");
-            hashMap.put("pTime",timeStamp);
-            hashMap.put("tipo_alojamiento1",rbTipo1);
-            hashMap.put("tipo_alojamiento2",rbTipo2);
+            hashMap.put("anfitrion_uid",uid);
+            hashMap.put("anfitrion_nombre",nombre);
+            hashMap.put("anfitrion_correo",correo);
+            hashMap.put("anfitrion_imagen",imagen_perfil);
+            hashMap.put("anuncio_id", timeStamp);
+            hashMap.put("anuncio_titulo",titulo);
+            hashMap.put("anuncio_imagen_alojamiento","noImagen");
+            hashMap.put("anuncio_fecha",timeStamp);
+            hashMap.put("tipo_alojamiento",rbTipo1);
+            hashMap.put("detalle_tipo_alojamiento",rbTipo2);
 
             //publicamos archivo
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");
             ref.child(timeStamp).setValue(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             //añadido a la base de datos
                             progressDialog.dismiss();
-                            Toast.makeText(AnunciarAlojamientoActivity.this, "Alojamiento publicado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnunciarAlojamientoActivity.this, "Anuncio publicado", Toast.LENGTH_SHORT).show();
                             //reset View
                             anunciar_titulo2.setText("");
+                            anunciar_precio.setText("");
                             iv_anunciar_foto.setImageURI(null);
                             image_uri=null;
                             rb_grupo1.clearCheck();

@@ -111,7 +111,7 @@ public class PerfilActivity extends AppCompatActivity{
         super.onStart();
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal, menu);
         return super.onCreateOptionsMenu(menu);
@@ -125,7 +125,7 @@ public class PerfilActivity extends AppCompatActivity{
             validadEstadoUsuario();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -164,6 +168,40 @@ public class PerfilFragment extends Fragment {
 
         });
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);  //para ver las opciones del menu en el fragment
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_principal, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.cerrar_sesion){
+            firebaseAuth.signOut();
+            validadEstadoUsuario();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void validadEstadoUsuario(){
+        //obtener usuario actual
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+        if (usuario != null){
+
+        }else{
+            //el usuario no ha iniciado sesión, regresa al activity principal
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        }
     }
 
     private boolean checkStoragePermission(){
@@ -330,6 +368,7 @@ public class PerfilFragment extends Fragment {
 
                 }else if (which==3){
                     pd.setMessage("Cerrando sesión.");
+                    //FirebaseAuth.getInstance().signOut();
                     firebaseAuth.signOut();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);

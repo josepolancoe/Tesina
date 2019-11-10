@@ -26,7 +26,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Seleccione el tipo de Aljamiento:"
+                            android:text="Seleccione el tipo de Alojamiento:"
                             android:textStyle="bold"/>
 
                         <RadioGroup
@@ -103,10 +103,18 @@
                             android:id="@+id/anunciar_titulo2"
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
-                            android:hint="Describe lo que pasó"
+                            android:hint="Titulo del Anuncio"
                             android:inputType="text|textMultiLine"
                             android:padding="5dp"
                             android:gravity="top"/>
+
+                        <EditText
+                            android:id="@+id/anunciar_precio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:visibility="invisible"
+                            android:hint="Precio por noche"/>
 
                         <ImageView
                             android:id="@+id/iv_anunciar_foto"
