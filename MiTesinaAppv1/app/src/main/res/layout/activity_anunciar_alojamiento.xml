@@ -131,11 +131,12 @@
                             android:id="@+id/btn_anunciar_publicar2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Publicar Denuncia"
+                            android:text="Publicar Anuncio"
                             android:layout_marginTop="10dp"/>
                     </LinearLayout>
 
             </LinearLayout>
+
 
     </LinearLayout>
 
