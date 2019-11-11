@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -138,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.login_facebook);
-        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -265,13 +266,19 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        mCallbackManager.onActivityResult(requestCode, resultCode,data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -342,7 +349,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-        Toast.makeText(LoginActivity.this, ""+token, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginActivity.this, ""+token, Toast.LENGTH_SHORT).show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -357,19 +364,21 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG,  email);
                             Toast.makeText(LoginActivity.this, email, Toast.LENGTH_SHORT).show();
                             String uid = user.getUid();
+                            String imagen = String.valueOf(user.getPhotoUrl());
+                            String nombre = user.getDisplayName();
 
                             //cuando el usuario está registrado, almacena la información del usuario en la base de datos en tiempo real de Firebase también usando HashMap
                             HashMap<Object, String> hashMap = new HashMap<>();
                             //subimos informacion en hasmap
                             hashMap.put("correo",email);
                             hashMap.put("uid",uid);
-                            hashMap.put("nombres","");
+                            hashMap.put("nombres",nombre);
                             hashMap.put("apellidos","");
                             hashMap.put("sexo","");
                             hashMap.put("fecha-de-nacimiento","");
                             hashMap.put("telefono","");
                             hashMap.put("contacto-de-emergencia","");
-                            hashMap.put("imagen","");
+                            hashMap.put("imagen", imagen+"?type=large");
 
                             //intanciamos la base de dato
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -379,7 +388,8 @@ public class LoginActivity extends AppCompatActivity {
                             reference.child(uid).setValue(hashMap);
 
                             Toast.makeText(LoginActivity.this, "Correo "+user.getEmail(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, PerfilActivity.class));
+                            goMainScreen();
+                            //startActivity(new Intent(LoginActivity.this, PerfilActivity.class));
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -388,6 +398,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void goMainScreen(){
+        Intent intent = new Intent(this, PerfilActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

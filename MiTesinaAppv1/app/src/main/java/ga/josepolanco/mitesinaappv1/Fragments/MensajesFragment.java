@@ -14,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ga.josepolanco.mitesinaappv1.MainActivity;
 import ga.josepolanco.mitesinaappv1.R;
@@ -27,6 +30,9 @@ import ga.josepolanco.mitesinaappv1.R;
 public class MensajesFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
+    FirebaseUser firebaseUser;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     public MensajesFragment() {
         // Required empty public constructor
@@ -37,7 +43,9 @@ public class MensajesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mensajes, container, false);
+        View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        return view;
     }
 
     @Override
@@ -57,6 +65,7 @@ public class MensajesFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.cerrar_sesion){
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             validadEstadoUsuario();
         }
         return super.onOptionsItemSelected(item);

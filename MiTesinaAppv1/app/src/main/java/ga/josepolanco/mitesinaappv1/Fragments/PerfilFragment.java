@@ -30,6 +30,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -187,6 +188,7 @@ public class PerfilFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.cerrar_sesion){
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             validadEstadoUsuario();
         }
         return super.onOptionsItemSelected(item);
@@ -368,8 +370,8 @@ public class PerfilFragment extends Fragment {
 
                 }else if (which==3){
                     pd.setMessage("Cerrando sesión.");
-                    //FirebaseAuth.getInstance().signOut();
                     firebaseAuth.signOut();
+                    LoginManager.getInstance().logOut();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
 
@@ -466,5 +468,6 @@ public class PerfilFragment extends Fragment {
         });
         builder.create().show();
     }
+
 
 }

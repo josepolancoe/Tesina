@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -95,6 +96,7 @@ public class ReservaFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.cerrar_sesion){
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             validadEstadoUsuario();
         }
         return super.onOptionsItemSelected(item);
