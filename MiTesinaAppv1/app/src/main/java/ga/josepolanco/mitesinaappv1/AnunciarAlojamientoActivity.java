@@ -8,15 +8,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +28,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,13 +52,14 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     ImageView iv_anunciar_foto;
-    TextView anunciar_titulo2, anunciar_precio;
+    TextView anunciar_titulo2, anunciar_precio, lat, lon;
     Button btn_anunciar_publicar2;
 
 
     private RadioGroup rb_grupo1, rb_grupo2;
-    private RadioButton rb_anunciar_departamento,rb_anunciar_casa,rb_anunciar_hotel, rb_anunciar_alojamiento_entero, rb_anunciar_habitacion_privada;
-    public String rbTipo1="", rbTipo2="";
+    private RadioButton rb_anunciar_departamento, rb_anunciar_casa, rb_anunciar_hotel, rb_anunciar_alojamiento_entero, rb_anunciar_habitacion_privada;
+    public String rbTipo1 = "", rbTipo2 = "";
+    double latitud = 0, longitud = 0;
 
     ProgressDialog progressDialog;
 
@@ -65,10 +71,12 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
     String cameraPermissions[];
     String storagePermissions[];
 
-    Uri image_uri=null;
+    Uri image_uri = null;
 
     //user info
-    String nombre,correo,uid,imagen_perfil;
+    String nombre, correo, uid, imagen_perfil;
+
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +98,10 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                     nombre = ""+snapshot.child("nombres").getValue();
-                     correo = ""+snapshot.child("correo").getValue();
-                    imagen_perfil = ""+snapshot.child("imagen").getValue();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    nombre = "" + snapshot.child("nombres").getValue();
+                    correo = "" + snapshot.child("correo").getValue();
+                    imagen_perfil = "" + snapshot.child("imagen").getValue();
                 }
             }
 
@@ -103,6 +111,12 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
             }
         });
 
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        lat =findViewById(R.id.tv_latitude);
+        lon=findViewById(R.id.tv_longitude);
+        obtenerLatLong();
 
         iv_anunciar_foto = findViewById(R.id.iv_anunciar_foto);
         anunciar_titulo2 = findViewById(R.id.anunciar_titulo2);
@@ -155,6 +169,36 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+    }
+
+    private void obtenerLatLong() {
+        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this,new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location!=null){
+                    Log.e(" Latitud alojamiento: ",+location.getLatitude()+" Longitud: "+location.getLongitude());
+                    lat.setText(String.valueOf(location.getLatitude()));
+                    lon.setText(String.valueOf(location.getLongitude()));
+                    latitud=location.getLatitude();
+                    longitud=location.getLongitude();
+                }
+            }
+        });
     }
 
     private void uploadData(final String titulo, String uri) {
@@ -178,7 +222,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
 
                             if (uriTask.isSuccessful()){
                                 //url recibida
-                                HashMap<Object, String> hashMap = new HashMap<>();
+                                HashMap<Object, Object> hashMap = new HashMap<>();
                                 hashMap.put("anfitrion_uid",uid);
                                 hashMap.put("anfitrion_nombre",nombre);
                                 hashMap.put("anfitrion_correo",correo);
@@ -189,6 +233,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                                 hashMap.put("anuncio_fecha",timeStamp);
                                 hashMap.put("tipo_alojamiento",rbTipo1);
                                 hashMap.put("detalle_tipo_alojamiento",rbTipo2);
+                                hashMap.put("latitud",latitud);
+                                hashMap.put("longitud",longitud);
 
                                 //publicamos archivo
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");
@@ -206,6 +252,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                                                 image_uri=null;
                                                 rb_grupo1.clearCheck();
                                                 rb_grupo2.clearCheck();
+                                                startActivity(new Intent(AnunciarAlojamientoActivity.this, PerfilActivity.class));
+                                                finish();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -223,7 +271,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 }
             });
         }else{
-            HashMap<Object, String> hashMap = new HashMap<>();
+            HashMap<Object, Object> hashMap = new HashMap<>();
             hashMap.put("anfitrion_uid",uid);
             hashMap.put("anfitrion_nombre",nombre);
             hashMap.put("anfitrion_correo",correo);
@@ -234,6 +282,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
             hashMap.put("anuncio_fecha",timeStamp);
             hashMap.put("tipo_alojamiento",rbTipo1);
             hashMap.put("detalle_tipo_alojamiento",rbTipo2);
+            hashMap.put("latitud",latitud);
+            hashMap.put("longitud",longitud);
 
             //publicamos archivo
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");
