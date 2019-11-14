@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
+    android:padding="7dp"
     android:background="#dbe2ef">
 
     <androidx.cardview.widget.CardView
@@ -12,15 +12,29 @@
         android:layout_gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
-        android:padding="10dp"
+        app:cardCornerRadius="13dp"
         app:cardBackgroundColor="@color/colorBlanco">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="17dp"
+            android:padding="10dp"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <ImageView
+                    android:id="@+id/alojamiento_opciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/ic_more_options_custom"/>
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/alojamiento_imagen"

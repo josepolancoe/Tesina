@@ -3,6 +3,7 @@ package ga.josepolanco.mitesinaappv1.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,6 +91,32 @@ public class ReservaFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_principal, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_buscar);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!TextUtils.isEmpty(query)){
+                    buscarAnuncios(query);
+                }else{
+                    cargarAnuncios();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText)){
+                    buscarAnuncios(newText);
+                }else{
+                    cargarAnuncios();
+                }
+                return false;
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -142,7 +171,34 @@ public class ReservaFragment extends Fragment {
 
     }
 
-    private void buscarAnuncios(String buscar){
+    private void buscarAnuncios(final String buscar){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Anuncios");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                modeloReservaList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    ModeloReserva modeloReserva = ds.getValue(ModeloReserva.class);
+
+                    if (modeloReserva.getAnuncio_titulo().toLowerCase().contains(buscar.toLowerCase())
+                            ||modeloReserva.getTipo_alojamiento().contains(buscar.toLowerCase())){
+                        modeloReservaList.add(modeloReserva);
+                    }
+
+
+                    //adaptador
+                    adaptadorAnuncios = new AdaptadorAnuncios(getActivity(),modeloReservaList);
+                    //set adapter to recyclerview
+                    recyclerView.setAdapter(adaptadorAnuncios);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

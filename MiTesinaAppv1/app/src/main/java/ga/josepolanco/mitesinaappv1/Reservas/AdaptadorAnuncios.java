@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,9 +25,12 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
     Context context;
     List<ModeloReserva> modeloReservaList;
 
+    String  myUid;
+
     public AdaptadorAnuncios(Context context, List<ModeloReserva> modeloReservaList) {
         this.context = context;
         this.modeloReservaList = modeloReservaList;
+        myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     @NonNull
@@ -35,7 +41,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
         String anfitrion_nombre = modeloReservaList.get(position).getAnfitrion_nombre();
         String anfitrion_imagen = modeloReservaList.get(position).getAnfitrion_imagen();
         String anuncio_titulo = modeloReservaList.get(position).getAnuncio_titulo();
@@ -61,6 +67,13 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
             }
         }
+
+        holder.alojamiento_opciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -69,7 +82,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder{
-        ImageView alojamiento_foto_perfil,alojamiento_imagen;
+        ImageView alojamiento_foto_perfil,alojamiento_imagen, alojamiento_opciones;
         TextView alojamiento_tipo,alojamiento_titulo,alojamiento_precio;
 
         public MyHolder(@NonNull View itemView){
@@ -80,6 +93,10 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
             alojamiento_tipo = itemView.findViewById(R.id.alojamiento_tipo);
             alojamiento_titulo = itemView.findViewById(R.id.alojamiento_titulo);
             alojamiento_precio = itemView.findViewById(R.id.alojamiento_precio);
+
+            alojamiento_opciones = itemView.findViewById(R.id.alojamiento_opciones);
+
+
 
 
         }
