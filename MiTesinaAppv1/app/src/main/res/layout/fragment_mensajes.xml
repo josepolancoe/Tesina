@@ -1,16 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.MensajesFragment">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mensaje_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:text="Mensajes" />
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorMoradoClaro"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-</FrameLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/mensaje_foto_perfil"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_user"
+            app:civ_border_width="3dp"
+            app:civ_border_color="#ffffff"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:paddingStart="5sp"
+            android:paddingEnd="5sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="20sp"
+            android:layout_marginLeft="20sp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/mensaje_anfitrion_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Andres Polanco"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/mensaje_anfitrion_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="En linea"
+                android:textColor="#ffffff"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mensaje_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mensaje_toolbar"
+        android:layout_above="@+id/mensaje_chat"/>
+
+    <LinearLayout
+        android:id="@+id/mensaje_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/mensaje_entrada"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Ingrese un mensaje"
+            android:padding="15sp"
+            android:inputType="textCapSentences"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/mensaje_enviar"
+            android:background="@null"
+            android:src="@drawable/ic_send_custom2"
+            android:layout_width="40sp"
+            android:layout_height="40sp" />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

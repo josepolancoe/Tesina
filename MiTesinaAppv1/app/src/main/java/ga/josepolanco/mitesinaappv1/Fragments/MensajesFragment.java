@@ -34,6 +34,8 @@ public class MensajesFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+
+
     public MensajesFragment() {
         // Required empty public constructor
     }
