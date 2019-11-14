@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="#263859">
+    android:background="#dbe2ef">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/reserva_alojamiento_card_view"
