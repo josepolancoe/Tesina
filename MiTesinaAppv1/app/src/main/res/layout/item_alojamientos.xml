@@ -27,11 +27,12 @@
                 android:orientation="horizontal"
                 android:gravity="end">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/alojamiento_opciones"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60sp"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:padding="3sp"
                     android:src="@drawable/ic_more_options_custom"/>
 
             </LinearLayout>

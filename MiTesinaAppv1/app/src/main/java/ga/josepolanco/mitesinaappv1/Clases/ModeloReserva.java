@@ -1,18 +1,23 @@
 package ga.josepolanco.mitesinaappv1.Clases;
 
 public class ModeloReserva {
-    String anfitrion_nombre, anfitrion_imagen, anuncio_titulo, anuncio_imagen_alojamiento, tipo_alojamiento;
+    public String anfitrion_uid, anfitrion_nombre, anfitrion_imagen, anuncio_id, anuncio_titulo, anuncio_imagen_alojamiento, anuncio_fecha, tipo_alojamiento;
+    public double anuncio_precio;
 
     public ModeloReserva(){
 
     }
 
-    public ModeloReserva(String anfitrion_nombre, String anfitrion_imagen, String anuncio_titulo, String anuncio_imagen_alojamiento, String tipo_alojamiento) {
+    public ModeloReserva(String anfitrion_uid, String anfitrion_nombre, String anfitrion_imagen, String anuncio_id, String anuncio_titulo, String anuncio_imagen_alojamiento, String anuncio_fecha, String tipo_alojamiento, double anuncio_precio) {
+        this.anfitrion_uid = anfitrion_uid;
         this.anfitrion_nombre = anfitrion_nombre;
         this.anfitrion_imagen = anfitrion_imagen;
+        this.anuncio_id = anuncio_id;
         this.anuncio_titulo = anuncio_titulo;
         this.anuncio_imagen_alojamiento = anuncio_imagen_alojamiento;
+        this.anuncio_fecha = anuncio_fecha;
         this.tipo_alojamiento = tipo_alojamiento;
+        this.anuncio_precio = anuncio_precio;
     }
 
     public String getAnfitrion_nombre() {
@@ -53,5 +58,37 @@ public class ModeloReserva {
 
     public void setTipo_alojamiento(String tipo_alojamiento) {
         this.tipo_alojamiento = tipo_alojamiento;
+    }
+
+    public String getAnfitrion_uid() {
+        return anfitrion_uid;
+    }
+
+    public void setAnfitrion_uid(String anfitrion_uid) {
+        this.anfitrion_uid = anfitrion_uid;
+    }
+
+    public String getAnuncio_id() {
+        return anuncio_id;
+    }
+
+    public void setAnuncio_id(String anuncio_id) {
+        this.anuncio_id = anuncio_id;
+    }
+
+    public String getAnuncio_fecha() {
+        return anuncio_fecha;
+    }
+
+    public void setAnuncio_fecha(String anuncio_fecha) {
+        this.anuncio_fecha = anuncio_fecha;
+    }
+
+    public double getAnuncio_precio() {
+        return anuncio_precio;
+    }
+
+    public void setAnuncio_precio(double anuncio_precio) {
+        this.anuncio_precio = anuncio_precio;
     }
 }
