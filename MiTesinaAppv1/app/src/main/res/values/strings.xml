@@ -6,8 +6,8 @@
     <string name="login_iniciar_sesion">Iniciar Sesión</string>
     <string name="login_olvido_su_clave">¿Olvidó su clave?</string>
 
-    <string name="facebook_app_id">2484338418464418</string> <string name="fb_login_protocol_scheme">fb2484338418464418</string>
-
+    <string name="facebook_app_id">2484338418464418</string>
+    <string name="fb_login_protocol_scheme">fb2484338418464418</string>
 
 
     <string-array name="numbers">
@@ -16,6 +16,5 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
 
 </resources>

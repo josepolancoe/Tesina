@@ -2,6 +2,7 @@ package ga.josepolanco.mitesinaappv1.Reservas;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.provider.MediaStore;
 import android.service.autofill.Dataset;
 import android.text.format.DateFormat;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,6 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import ga.josepolanco.mitesinaappv1.AnuncioDetalleActivity;
 import ga.josepolanco.mitesinaappv1.Clases.ModeloReserva;
 import ga.josepolanco.mitesinaappv1.R;
 
@@ -105,6 +108,26 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
             }
         });
+
+        holder.reserva_alojamiento_card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //iniciamos activity detalle anuncio
+                Intent intent = new Intent(context, AnuncioDetalleActivity.class);
+                intent.putExtra("anuncio_id",anuncio_id);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.anuncio_acceder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //iniciamos activity detalle anuncio
+                Intent intent = new Intent(context, AnuncioDetalleActivity.class);
+                intent.putExtra("anuncio_id",anuncio_id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void mostrarOpciones(ImageButton alojamiento_opciones, final String anfitrion_uid, String myUid, final String anuncio_id, final String anuncio_imagen_alojamiento) {
@@ -112,7 +135,9 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
         if (anfitrion_uid.equals(myUid)){
             popupMenu.getMenu().add(Menu.NONE, 0, 0, "Eliminar");
+
         }
+            popupMenu.getMenu().add(Menu.NONE,1,0,"Ver más");
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -121,6 +146,11 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
                 if (id==0){
                     //click eliminar
                     eliminarAnuncio(anuncio_id,anuncio_imagen_alojamiento);
+                }else if(id==1){
+                    //iniciamos activity detalle anuncio
+                    Intent intent = new Intent(context, AnuncioDetalleActivity.class);
+                    intent.putExtra("anuncio_id",anuncio_id);
+                    context.startActivity(intent);
                 }
                 return false;
             }
@@ -205,6 +235,9 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         TextView alojamiento_tipo,alojamiento_titulo,alojamiento_precio;
         ImageButton alojamiento_opciones;
 
+        CardView reserva_alojamiento_card_view;
+        Button anuncio_acceder;
+
         public MyHolder(@NonNull View itemView){
             super(itemView);
 
@@ -215,6 +248,9 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
             alojamiento_precio = itemView.findViewById(R.id.alojamiento_precio);
 
             alojamiento_opciones = itemView.findViewById(R.id.alojamiento_opciones);
+            reserva_alojamiento_card_view = itemView.findViewById(R.id.reserva_alojamiento_card_view);
+
+            anuncio_acceder = itemView.findViewById(R.id.anuncio_acceder);
 
 
 

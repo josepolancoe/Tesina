@@ -111,6 +111,22 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/anuncio_acceder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acceder"/>
+
+                <Button
+                    android:id="@+id/anuncio_enviar_mensaje"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enviar un mensaje"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

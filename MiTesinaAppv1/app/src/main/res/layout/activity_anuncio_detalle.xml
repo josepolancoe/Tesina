@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnuncioDetalleActivity"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="13dp"
+                app:cardBackgroundColor="@color/colorBlanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <!--Opciones Menu-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end">
+
+                        <ImageButton
+                            android:id="@+id/alojamiento_opciones"
+                            android:layout_width="60sp"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:padding="3sp"
+                            android:src="@drawable/ic_more_options_custom"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/anuncio_detalle_imagen_alojamiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/alojamiento_01"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/anuncio_detalle_tipo_alojamiento_descripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:padding="0dp"
+                        android:textColor="#000000"
+                        android:text="HABITACIÓN PRIVADA - TRUJILLO"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/anuncio_detalle_titulo_alojamiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:textSize="25sp"
+                        android:text="Cuarto céntrico en Trujillo"
+                        android:layout_marginBottom="0dp"
+                        android:textStyle="bold"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/anuncio_detalle_foto_perfil"
+                            android:layout_width="90sp"
+                            android:layout_height="90sp"
+                            android:paddingStart="5sp"
+                            android:paddingEnd="5sp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_user"
+                            fancy:civ_border_color="#ffffff"
+                            fancy:civ_border_width="3dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/anuncio_detalle_anfitrion_nombre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:text="Andres Polanco"
+                                android:paddingBottom="7sp"/>
+
+                            <TextView
+                                android:id="@+id/anuncio_detalle_precio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="S/.33 por noche"/>
+
+                            <RatingBar
+                                android:id="@+id/anuncio_detalle_puntuacion"
+                                style="@style/RatingBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:theme="@style/RatingBar"
+                                android:numStars="5"
+                                android:rating="4.5"
+                                android:stepSize="0.5" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10sp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#484848"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text="Departamento"/>
+
+                            <TextView
+                                android:id="@+id/anuncio_detalle_tipo_alojamiento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="1 habitación - 2 camas"
+                                android:paddingStart="10sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Sobre el alojamiento:"/>
+
+                        <TextView
+                            android:id="@+id/anuncio_detalle_descripcion_alojamiento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10sp"
+                            android:text="Localizado en el centro de Trujillo, caracteristico del clima..."/>
+                    </LinearLayout>
+
+                    <!--Servicios complementarios-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Servicios Complementarios"/>
+
+                        <TextView
+                            android:id="@+id/anuncio_detalle_servicios_comentarios"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10sp"
+                            android:text="Wifi - Cocina - Desayuno"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Reglas del alojamiento"/>
+
+                        <TextView
+                            android:id="@+id/anuncio_detalle_reglas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10sp"
+                            android:text="Mantener limpio"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <Button
+                            android:id="@+id/anuncio_detalle_btnContactar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Enviar mensaje"
+                            android:drawableLeft="@drawable/ic_mensaje_custom"/>
+
+                        <Button
+                            android:id="@+id/anuncio_detalle_btnReseñas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver todas las reseñas" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10sp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#484848"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
