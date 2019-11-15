@@ -3,6 +3,8 @@ package ga.josepolanco.mitesinaappv1.Reservas;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.provider.MediaStore;
 import android.service.autofill.Dataset;
 import android.text.format.DateFormat;
@@ -95,7 +97,17 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         }else{
             holder.alojamiento_imagen.setVisibility(View.VISIBLE);
             try{
-                Picasso.get().load(anuncio_imagen_alojamiento).into(holder.alojamiento_imagen);
+
+                //Picasso.get().load(anuncio_imagen_alojamiento).fit().centerCrop().into(holder.alojamiento_imagen);
+
+                //Muestra tamaño reducido
+                Picasso.get().load(anuncio_imagen_alojamiento).resize(700,700).centerCrop().into(holder.alojamiento_imagen);
+
+
+
+
+                //Original
+                //Picasso.get().load(anuncio_imagen_alojamiento).into(holder.alojamiento_imagen);
             }catch(Exception e){
 
             }

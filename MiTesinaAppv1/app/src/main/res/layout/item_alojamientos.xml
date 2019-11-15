@@ -40,7 +40,7 @@
             <ImageView
                 android:id="@+id/alojamiento_imagen"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="215sp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
@@ -124,7 +124,8 @@
                     android:id="@+id/anuncio_enviar_mensaje"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enviar un mensaje"/>
+                    android:text=" Enviar un mensaje"
+                    android:drawableStart="@drawable/ic_mensaje_custom"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -143,13 +143,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingBottom="5sp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
-                                android:text="Departamento"/>
+                                android:text="Departamento"
+                                android:textSize="16sp"/>
 
                             <TextView
                                 android:id="@+id/anuncio_detalle_tipo_alojamiento"
@@ -162,13 +164,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingBottom="5sp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Sobre el alojamiento:"/>
+                            android:text="Sobre el alojamiento:"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/anuncio_detalle_descripcion_alojamiento"
@@ -182,13 +186,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingBottom="5sp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Servicios Complementarios"/>
+                            android:text="Servicios Complementarios"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/anuncio_detalle_servicios_comentarios"
@@ -201,13 +207,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingBottom="10sp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Reglas del alojamiento"/>
+                            android:text="Reglas del alojamiento"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/anuncio_detalle_reglas"
@@ -235,7 +243,8 @@
                             android:id="@+id/anuncio_detalle_btnReseñas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ver todas las reseñas" />
+                            android:text=" Ver todas las reseñas"
+                            android:drawableLeft="@drawable/ic_ver_custom" />
 
                     </LinearLayout>
 

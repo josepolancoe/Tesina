@@ -146,7 +146,9 @@ public class PerfilFragment extends Fragment {
                     perfil_correo.setText(correo);
                     perfil_celular.setText(celular);
                     try {
-                        Picasso.get().load(imagen).into(perfil_foto);
+                        Picasso.get().load(imagen).resize(200,200).centerCrop().into(perfil_foto);
+                        //Picasso.get().load(imagen).resize(100,100).into(perfil_foto);
+
                     }catch (Exception e){
                         Picasso.get().load(R.drawable.img_user).into(perfil_foto);
                     }
