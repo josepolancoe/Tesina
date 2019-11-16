@@ -1,4 +1,4 @@
-package ga.josepolanco.mitesinaappv1.Clases;
+package ga.josepolanco.mitesinaappv1.Modelos;
 
 public class ModeloReserva {
     public String anfitrion_uid, anfitrion_nombre, anfitrion_imagen, anuncio_id, anuncio_titulo, anuncio_imagen_alojamiento, anuncio_fecha, tipo_alojamiento;

@@ -1,12 +1,8 @@
-package ga.josepolanco.mitesinaappv1.Reservas;
+package ga.josepolanco.mitesinaappv1.Adaptadores;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.provider.MediaStore;
-import android.service.autofill.Dataset;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +38,8 @@ import java.util.List;
 import java.util.Locale;
 
 import ga.josepolanco.mitesinaappv1.AnuncioDetalleActivity;
-import ga.josepolanco.mitesinaappv1.Clases.ModeloReserva;
+import ga.josepolanco.mitesinaappv1.ChatActivity;
+import ga.josepolanco.mitesinaappv1.Modelos.ModeloReserva;
 import ga.josepolanco.mitesinaappv1.R;
 
 public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.MyHolder>{
@@ -97,14 +93,8 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         }else{
             holder.alojamiento_imagen.setVisibility(View.VISIBLE);
             try{
-
-                //Picasso.get().load(anuncio_imagen_alojamiento).fit().centerCrop().into(holder.alojamiento_imagen);
-
                 //Muestra tamaño reducido
                 Picasso.get().load(anuncio_imagen_alojamiento).resize(700,700).centerCrop().into(holder.alojamiento_imagen);
-
-
-
 
                 //Original
                 //Picasso.get().load(anuncio_imagen_alojamiento).into(holder.alojamiento_imagen);
@@ -137,6 +127,16 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
                 //iniciamos activity detalle anuncio
                 Intent intent = new Intent(context, AnuncioDetalleActivity.class);
                 intent.putExtra("anuncio_id",anuncio_id);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.anuncio_enviar_mensaje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //iniciamos activity detalle anuncio
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("anfitrion_uid",anfitrion_uid);
                 context.startActivity(intent);
             }
         });
@@ -248,7 +248,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         ImageButton alojamiento_opciones;
 
         CardView reserva_alojamiento_card_view;
-        Button anuncio_acceder;
+        Button anuncio_acceder, anuncio_enviar_mensaje;
 
         public MyHolder(@NonNull View itemView){
             super(itemView);
@@ -263,6 +263,8 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
             reserva_alojamiento_card_view = itemView.findViewById(R.id.reserva_alojamiento_card_view);
 
             anuncio_acceder = itemView.findViewById(R.id.anuncio_acceder);
+            anuncio_enviar_mensaje = itemView.findViewById(R.id.anuncio_enviar_mensaje);
+
 
 
 

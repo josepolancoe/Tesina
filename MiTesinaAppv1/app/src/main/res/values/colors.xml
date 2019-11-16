@@ -6,4 +6,6 @@
     <color name="colorBlanco">#ffffff</color>
     <color name="colorMorado">#3f72af</color>
     <color name="colorMoradoClaro">#112d4e</color>
+    <color name="colorWhite">#ffffff</color>
+
 </resources>

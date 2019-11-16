@@ -88,7 +88,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
                     }else{
                         anuncio_detalle_imagen_alojamiento.setVisibility(View.VISIBLE);
                         try{
-                            Picasso.get().load(AdImagenAlojamiento).into(anuncio_detalle_imagen_alojamiento);
+                            Picasso.get().load(AdImagenAlojamiento).resize(700,700).centerInside().into(anuncio_detalle_imagen_alojamiento);
                         }catch (Exception e){
 
                         }

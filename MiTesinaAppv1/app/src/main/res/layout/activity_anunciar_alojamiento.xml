@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Ubicación"
+                        android:text="Mi Ubicación"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                     <TableRow
@@ -181,21 +181,30 @@
                             android:gravity="top"/>
 
                         <EditText
-                            android:id="@+id/anunciar_precio"
+                            android:id="@+id/anunciar_reglas"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="75dp"
+                            android:hint="Reglas sobre el alojamiento"
+                            android:inputType="text|textMultiLine"
+                            android:padding="5dp"
+                            android:gravity="top"/>
+
+                        <EditText
+                            android:id="@+id/anunciar_precio"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:inputType="number"
                             android:visibility="invisible"
                             android:hint="Precio por noche"/>
 
                         <ImageView
                             android:id="@+id/iv_anunciar_foto"
-                            android:layout_width="match_parent"
-                            android:layout_height="300sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="Seleccionar Foto"
                             android:padding="15dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/upload_imagen"
+                            android:src="@drawable/ic_upload_foto_custom2"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"/>
 

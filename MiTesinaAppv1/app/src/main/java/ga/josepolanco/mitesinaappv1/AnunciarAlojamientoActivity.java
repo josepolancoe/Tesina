@@ -44,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -447,11 +448,17 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
             if (requestCode == IMAGE_PICK_GALLERY_CODE){
                 //image is picked from gallery, get url of image
                 image_uri = data.getData();
-                iv_anunciar_foto.setImageURI(image_uri);
+                //iv_anunciar_foto.setImageURI(image_uri);
+                Picasso.get().load(image_uri).resize(500,500).centerInside().into(iv_anunciar_foto);
+
+                //Picasso.get().load(image_uri).into(iv_anunciar_foto);
             }
             else if (requestCode == IMAGE_PICK_CAMERA_CODE){
                 //image is shot from camera
-                iv_anunciar_foto.setImageURI(image_uri);
+                //iv_anunciar_foto.setImageURI(image_uri);
+                Picasso.get().load(image_uri).resize(500,500).centerInside().into(iv_anunciar_foto);
+
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

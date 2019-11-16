@@ -10,8 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ga.josepolanco.mitesinaappv1.Clases.ModeloReserva;
+import ga.josepolanco.mitesinaappv1.Modelos.ModeloReserva;
 import ga.josepolanco.mitesinaappv1.MainActivity;
-import ga.josepolanco.mitesinaappv1.PerfilActivity;
 import ga.josepolanco.mitesinaappv1.R;
-import ga.josepolanco.mitesinaappv1.Reservas.AdaptadorAnuncios;
+import ga.josepolanco.mitesinaappv1.Adaptadores.AdaptadorAnuncios;
 
 
 /**
