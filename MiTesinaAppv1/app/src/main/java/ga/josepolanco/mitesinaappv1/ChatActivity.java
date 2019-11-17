@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +31,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import ga.josepolanco.mitesinaappv1.Adaptadores.AdaptadorChat;
 import ga.josepolanco.mitesinaappv1.Modelos.ModeloChat;
@@ -93,7 +96,16 @@ public class ChatActivity extends AppCompatActivity {
                     String nombre = ""+snapshot.child("nombres").getValue();
                     anfitrion_imagen = ""+snapshot.child("imagen").getValue();
 
+                    String onlineStatus = ""+snapshot.child("estado_en_linea").getValue();
 
+                    if (onlineStatus.equalsIgnoreCase("En Linea")){
+                        chat_anfitrion_estado.setText(onlineStatus);
+                    }else{
+                        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                        cal.setTimeInMillis(Long.parseLong(onlineStatus));
+                        String dataTime = DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
+                        chat_anfitrion_estado.setText("Ultima vez "+dataTime);
+                    }
                     //seteamos los datos
                     chat_anfitrion_nombre.setText(nombre);
                     try{
@@ -128,6 +140,40 @@ public class ChatActivity extends AppCompatActivity {
 
         leerMensaje();
         verMensaje();
+
+        /*final DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(miId)
+                .child(anfitrion_uid);
+        chatReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatReference.child("id").setValue(anfitrion_uid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference chatReference2 = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(anfitrion_uid)
+                .child(miId);
+        chatReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatReference2.child("id").setValue(miId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
     }
 
     private void verMensaje() {
@@ -208,6 +254,13 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    private void validarEstadoOnline(String status){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios").child(miId);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("estado_en_linea",status);
+        databaseReference.updateChildren(hashMap);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal,menu);
@@ -231,12 +284,26 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         validadEstadoUsuario();
+        validarEstadoOnline("En Linea");
         super.onStart();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        //obtener tiempo
+        String timestamp = String.valueOf(System.currentTimeMillis());
+
+        //cambiamos estado desconectado
+        validarEstadoOnline(timestamp);
         vistoReference.removeEventListener(vistoListener);
+    }
+
+    @Override
+    protected void onResume() {
+        validarEstadoOnline("En Linea");
+        super.onResume();
+
     }
 }

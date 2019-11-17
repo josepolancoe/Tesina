@@ -97,10 +97,12 @@ public class RegistrarActivity extends AppCompatActivity {
                             hashMap.put("nombres","");
                             hashMap.put("apellidos","");
                             hashMap.put("sexo","");
-                            hashMap.put("fecha-de-nacimiento","");
+                            hashMap.put("fecha_de_nacimiento","");
                             hashMap.put("telefono","");
-                            hashMap.put("contacto-de-emergencia","");
+                            hashMap.put("contacto_de_emergencia","");
                             hashMap.put("imagen","");
+                            hashMap.put("dni","");
+                            hashMap.put("estado_en_linea","En Linea");
 
                             //intanciamos la base de dato
                             FirebaseDatabase database = FirebaseDatabase.getInstance();

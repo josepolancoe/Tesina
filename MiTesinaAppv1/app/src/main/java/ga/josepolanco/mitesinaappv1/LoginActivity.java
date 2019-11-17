@@ -303,23 +303,27 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                            //if (task.getResult().getAdditionalUserInfo().isNewUser()){
                                 //obtener correo de usuario y llave
                                 String email = user.getEmail();
                                 String uid = user.getUid();
+                                String nombre = user.getDisplayName();
+                                String imagen = user.getPhotoUrl().toString();
 
                                 //cuando el usuario está registrado, almacena la información del usuario en la base de datos en tiempo real de Firebase también usando HashMap
                                 HashMap<Object, String> hashMap = new HashMap<>();
                                 //subimos informacion en hasmap
                                 hashMap.put("correo",email);
                                 hashMap.put("uid",uid);
-                                hashMap.put("nombres","");
+                                hashMap.put("nombres",nombre);
                                 hashMap.put("apellidos","");
                                 hashMap.put("sexo","");
-                                hashMap.put("fecha-de-nacimiento","");
+                                hashMap.put("fecha_de_nacimiento","");
                                 hashMap.put("telefono","");
-                                hashMap.put("contacto-de-emergencia","");
-                                hashMap.put("imagen","");
+                                hashMap.put("contacto_de_emergencia","");
+                                hashMap.put("imagen",imagen);
+                                hashMap.put("dni","");
+                                hashMap.put("estado_en_linea","En Linea");
 
                                 //intanciamos la base de dato
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -329,15 +333,15 @@ public class LoginActivity extends AppCompatActivity {
                                 reference.child(uid).setValue(hashMap);
                             }
 
-                            Toast.makeText(LoginActivity.this, "Correo "+user.getEmail(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, PerfilActivity.class));
+                            //Toast.makeText(LoginActivity.this, "Correo "+, Toast.LENGTH_SHORT).show();
+                            goMainScreen();
                             finish();
                             //updateUI(user);
-                        } else {
+                        //} else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Inicio Fallido...", Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(LoginActivity.this, "Inicio Fallido...", Toast.LENGTH_SHORT).show();
                             //updateUI(null);
-                        }
+                        //}
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -375,10 +379,12 @@ public class LoginActivity extends AppCompatActivity {
                             hashMap.put("nombres",nombre);
                             hashMap.put("apellidos","");
                             hashMap.put("sexo","");
-                            hashMap.put("fecha-de-nacimiento","");
+                            hashMap.put("fecha_de_nacimiento","");
                             hashMap.put("telefono","");
-                            hashMap.put("contacto-de-emergencia","");
+                            hashMap.put("contacto_de_emergencia","");
                             hashMap.put("imagen", imagen+"?type=large");
+                            hashMap.put("dni","");
+                            hashMap.put("estado_en_linea","En Linea");
 
                             //intanciamos la base de dato
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
