@@ -57,9 +57,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/chat_toolbar"
-        android:layout_above="@+id/mensaje_chat"/>
+        android:layout_above="@+id/chat_mensaje"/>
 
     <LinearLayout
         android:id="@+id/chat_mensaje"
@@ -76,7 +76,7 @@
             android:background="@null"
             android:hint="Ingrese un mensaje"
             android:padding="15sp"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences|textMultiLine"
             android:layout_width="0sp"
             android:layout_height="wrap_content" />
 

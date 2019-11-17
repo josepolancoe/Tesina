@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/chat_foto_perfil"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_user"
+            app:civ_border_width="3dp"
+            app:civ_border_color="#ffffff"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:paddingStart="5sp"
+            android:paddingEnd="5sp"/>
+
+            <TextView
+                android:id="@+id/chat_mensaje_contenido"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mensaje"
+                android:textColor="#000000"
+                android:background="@drawable/bg_receiver"
+                android:textSize="16sp"
+                android:padding="15sp"/>
+
+            <TextView
+                android:id="@+id/chat_mensaje_tiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01/01/21 05:50 PM"
+                android:textSize="12sp"
+                android:padding="5sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/chat_mensaje_estado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="entregado"
+        android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:gravity="end"/>
+
+</LinearLayout>

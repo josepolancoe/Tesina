@@ -63,7 +63,7 @@
                         android:textSize="16sp"
                         android:padding="0dp"
                         android:textColor="#000000"
-                        android:text="HABITACIÓN PRIVADA - TRUJILLO"
+                        android:text="TIPO DE ALOJAMIENTO"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:textSize="25sp"
-                        android:text="Cuarto céntrico en Trujillo"
+                        android:text="TITULO DE ALOJAMIENTO"
                         android:layout_marginBottom="0dp"
                         android:textStyle="bold"
                         />
@@ -106,7 +106,7 @@
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
                                 android:textSize="18sp"
-                                android:text="Andres Polanco"
+                                android:text="Nombre"
                                 android:paddingBottom="7sp"/>
 
                             <TextView

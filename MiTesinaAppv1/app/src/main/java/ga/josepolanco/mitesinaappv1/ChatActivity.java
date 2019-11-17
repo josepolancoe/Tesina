@@ -3,6 +3,7 @@ package ga.josepolanco.mitesinaappv1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -28,7 +29,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import ga.josepolanco.mitesinaappv1.Adaptadores.AdaptadorChat;
+import ga.josepolanco.mitesinaappv1.Modelos.ModeloChat;
 
 public class ChatActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -42,7 +48,14 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference userReference;
 
-    String miId, anfitrion_uid;
+    //para revisar si se ha visto el mensaje o no
+    ValueEventListener vistoListener;
+    DatabaseReference vistoReference;
+
+    List<ModeloChat> listaChat;
+    AdaptadorChat adaptadorChat;
+
+    String miId, anfitrion_uid, anfitrion_imagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,13 @@ public class ChatActivity extends AppCompatActivity {
         chat_anfitrion_estado = findViewById(R.id.chat_anfitrion_estado);
         chat_entrada = findViewById(R.id.chat_entrada);
         chat_enviar = findViewById(R.id.chat_enviar);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+
+        //Propiedades del Recycler
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         Intent intent = getIntent();
         anfitrion_uid = intent.getStringExtra("anfitrion_uid");
@@ -71,13 +91,13 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     //obtenemos información
                     String nombre = ""+snapshot.child("nombres").getValue();
-                    String imagen = ""+snapshot.child("imagen").getValue();
+                    anfitrion_imagen = ""+snapshot.child("imagen").getValue();
 
 
                     //seteamos los datos
                     chat_anfitrion_nombre.setText(nombre);
                     try{
-                        Picasso.get().load(imagen).into(chat_foto_perfil);
+                        Picasso.get().load(anfitrion_imagen).into(chat_foto_perfil);
                     }catch (Exception e){
                         Picasso.get().load(R.drawable.img_user).into(chat_foto_perfil);
 
@@ -105,14 +125,70 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+        leerMensaje();
+        verMensaje();
+    }
+
+    private void verMensaje() {
+        vistoReference = FirebaseDatabase.getInstance().getReference("Chats");
+        vistoListener = vistoReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    ModeloChat chat = snapshot.getValue(ModeloChat.class);
+                    if (chat.getReceptor().equals(miId) && chat.getEmisor().equals(anfitrion_uid)){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("fueVisto",true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void leerMensaje() {
+        listaChat = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listaChat.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    ModeloChat modeloChat = snapshot.getValue(ModeloChat.class);
+                    if (modeloChat.getReceptor().equals(miId)&&modeloChat.getEmisor().equals(anfitrion_uid) ||
+                            modeloChat.getReceptor().equals(anfitrion_uid)&&modeloChat.getEmisor().equals(miId)){
+                        listaChat.add(modeloChat);
+                    }
+
+                    //Adaptador
+                    adaptadorChat = new AdaptadorChat(ChatActivity.this, listaChat, anfitrion_imagen);
+                    adaptadorChat.notifyDataSetChanged();
+
+                    //Recycler
+                    recyclerView.setAdapter(adaptadorChat);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void enviarMensaje(String mensaje) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        String timestamp = String.valueOf(System.currentTimeMillis());
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("emisor",miId);
         hashMap.put("receptor",anfitrion_uid);
         hashMap.put("mensaje",mensaje);
+        hashMap.put("timestamp",timestamp);
+        hashMap.put("fueVisto",false);
         databaseReference.child("Chats").push().setValue(hashMap);
 
         //vaciamos la caja
@@ -156,5 +232,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStart() {
         validadEstadoUsuario();
         super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vistoReference.removeEventListener(vistoListener);
     }
 }
