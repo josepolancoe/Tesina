@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import ga.josepolanco.mitesinaappv1.Fragments.ChatListFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.MapaFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.MensajesFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.PerfilFragment;
@@ -70,12 +71,21 @@ public class PerfilActivity extends AppCompatActivity{
                     fragmentTransaction2.commit();
                     return true;
 
-                case R.id.nav_mensajes:
+                /*case R.id.nav_mensajes:
                     //Fragment Mis Amigos transaccion
                     //actionBar.setTitle("Mensajes");
                     MensajesFragment mensajesFragment = new MensajesFragment();
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.contenido_perfil, mensajesFragment,"");
+                    fragmentTransaction3.commit();
+                    return true;*/
+
+                case R.id.nav_mensajes:
+                    //Fragment Mis Amigos transaccion
+                    //actionBar.setTitle("Mensajes");
+                    ChatListFragment chatListFragment = new ChatListFragment();
+                    FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction3.replace(R.id.contenido_perfil, chatListFragment,"");
                     fragmentTransaction3.commit();
                     return true;
 

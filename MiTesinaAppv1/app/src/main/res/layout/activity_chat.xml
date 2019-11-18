@@ -37,7 +37,7 @@
                 android:id="@+id/chat_anfitrion_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Andres Polanco"
+                android:text="Jhon Smith"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold"/>

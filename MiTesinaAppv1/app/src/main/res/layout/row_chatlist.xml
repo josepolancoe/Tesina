@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="10sp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/chatlist_foto"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_user"
+            app:civ_border_width="3dp"
+            app:civ_border_color="#ffffff"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:paddingStart="5sp"
+            android:paddingEnd="5sp"/>
+
+        <ImageView
+            android:id="@+id/chatlist_estado"
+            android:layout_width="25sp"
+            android:layout_height="25sp"/>
+
+        <TextView
+            android:id="@+id/chatlist_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textColor="@color/colorMoradoClaro"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/chatlist_foto"
+            android:layout_toRightOf="@id/chatlist_foto"
+            android:layout_marginLeft="3sp"/>
+
+        <TextView
+            android:id="@+id/chatlist_ultimo_mensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ultimo mensaje"
+            android:maxLines="2"
+            android:textColor="@color/colorMoradoClaro"
+            android:textSize="16sp"
+            android:layout_below="@id/chatlist_nombre"
+            android:layout_toEndOf="@id/chatlist_foto"
+            android:layout_toRightOf="@id/chatlist_foto"
+            android:layout_marginLeft="5sp"/>
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

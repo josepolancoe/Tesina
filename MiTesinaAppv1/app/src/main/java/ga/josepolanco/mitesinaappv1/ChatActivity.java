@@ -141,39 +141,7 @@ public class ChatActivity extends AppCompatActivity {
         leerMensaje();
         verMensaje();
 
-        /*final DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(miId)
-                .child(anfitrion_uid);
-        chatReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    chatReference.child("id").setValue(anfitrion_uid);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        final DatabaseReference chatReference2 = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(anfitrion_uid)
-                .child(miId);
-        chatReference2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    chatReference2.child("id").setValue(miId);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
     }
 
     private void verMensaje() {
@@ -226,7 +194,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void enviarMensaje(String mensaje) {
+    private void enviarMensaje(final String mensaje) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         String timestamp = String.valueOf(System.currentTimeMillis());
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -239,6 +207,40 @@ public class ChatActivity extends AppCompatActivity {
 
         //vaciamos la caja
         chat_entrada.setText("");
+
+        final DatabaseReference chatReference = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(miId)
+                .child(anfitrion_uid);
+        chatReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatReference.child("id").setValue(anfitrion_uid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference chatReference2 = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(anfitrion_uid)
+                .child(miId);
+        chatReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatReference2.child("id").setValue(miId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void validadEstadoUsuario(){

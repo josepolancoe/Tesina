@@ -100,10 +100,10 @@
 
                     <RatingBar
                         android:id="@+id/alojamiento_puntuacion"
-                        style="@style/RatingBar"
+                        style="@style/customRatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:theme="@style/RatingBar"
+                        android:theme="@style/customRatingBar"
                         android:numStars="5"
                         android:rating="4.5"
                         android:stepSize="0.5" />
