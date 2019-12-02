@@ -147,6 +147,7 @@
                         android:paddingBottom="5sp">
 
                             <TextView
+                                android:id="@+id/txt_tipo_alojamiento"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
@@ -171,37 +172,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Sobre el alojamiento:"
+                            android:text="Ubicación del alojamiento:"
                             android:textSize="16sp"/>
 
                         <TextView
-                            android:id="@+id/anuncio_detalle_descripcion_alojamiento"
+                            android:id="@+id/txt_ubicacion_alojamiento"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingStart="10sp"
                             android:text="Localizado en el centro de Trujillo, caracteristico del clima..."/>
-                    </LinearLayout>
-
-                    <!--Servicios complementarios-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingBottom="5sp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="Servicios Complementarios"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:id="@+id/anuncio_detalle_servicios_comentarios"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10sp"
-                            android:text="Wifi - Cocina - Desayuno"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -229,24 +208,118 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:padding="7sp">
 
-
-                        <Button
-                            android:id="@+id/anuncio_detalle_btnContactar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Enviar mensaje"
-                            android:drawableLeft="@drawable/ic_mensaje_custom"/>
-
-                        <Button
-                            android:id="@+id/anuncio_detalle_btnReseñas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Ver todas las reseñas"
-                            android:drawableLeft="@drawable/ic_ver_custom" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#484848"/>
 
                     </LinearLayout>
+
+                    <GridLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="0"
+                            android:textStyle="bold"
+                            android:text="Servicios Incluidos:"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                        <Space
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_column="1"
+                            android:layout_row="0" />
+
+                        <Space
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_column="0"
+                            android:layout_row="1" />
+
+                        <TextView
+                            android:id="@+id/txt_servicios_basicos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="2"
+                            android:checked="true"
+                            android:text="Servicios básicos" />
+
+
+                        <TextView
+                            android:id="@+id/txt_servicio_wifi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="3"
+                            android:checked="false"
+                            android:text="Wi-fi" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_cocina"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="3"
+                            android:checked="false"
+                            android:text="Cocina" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_ordenador"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="4"
+                            android:checked="false"
+                            android:text="Ordenador" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_almuerzo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="4"
+                            android:checked="false"
+                            android:text="Almuerzo" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="5"
+                            android:checked="false"
+                            android:text="TV" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_desayuno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="5"
+                            android:checked="false"
+                            android:text="Desayuno" />
+
+                        <TextView
+                            android:id="@+id/txt_servicio_lavadora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="2"
+                            android:checked="false"
+                            android:text="Lavadora" />
+
+                    </GridLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -260,7 +333,27 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+
+                        <Button
+                            android:id="@+id/btn_contactar_anuncio_detalle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Enviar mensaje"
+                            android:drawableLeft="@drawable/ic_mensaje_custom"/>
+
+                        <Button
+                            android:id="@+id/anuncio_detalle_btnReseñas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Ver todas las reseñas"
+                            android:drawableLeft="@drawable/ic_ver_custom" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -22,7 +22,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ChatActivity"></activity>
         <activity android:name=".AnuncioDetalleActivity" />
-        <activity android:name=".AnunciarAlojamientoActivity" />
+        <activity android:name=".AnunciarAlojamientoActivity"
+                    android:configChanges="screenSize|orientation"
+                    android:windowSoftInputMode="stateHidden"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

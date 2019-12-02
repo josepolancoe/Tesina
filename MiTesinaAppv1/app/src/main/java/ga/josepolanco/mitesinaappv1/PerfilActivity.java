@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import ga.josepolanco.mitesinaappv1.Fragments.ChatListFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.MapaFragment;
-import ga.josepolanco.mitesinaappv1.Fragments.MensajesFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.PerfilFragment;
 import ga.josepolanco.mitesinaappv1.Fragments.ReservaFragment;
 
@@ -70,15 +68,6 @@ public class PerfilActivity extends AppCompatActivity{
                     fragmentTransaction2.replace(R.id.contenido_perfil, mapaFragment,"");
                     fragmentTransaction2.commit();
                     return true;
-
-                /*case R.id.nav_mensajes:
-                    //Fragment Mis Amigos transaccion
-                    //actionBar.setTitle("Mensajes");
-                    MensajesFragment mensajesFragment = new MensajesFragment();
-                    FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction3.replace(R.id.contenido_perfil, mensajesFragment,"");
-                    fragmentTransaction3.commit();
-                    return true;*/
 
                 case R.id.nav_mensajes:
                     //Fragment Mis Amigos transaccion

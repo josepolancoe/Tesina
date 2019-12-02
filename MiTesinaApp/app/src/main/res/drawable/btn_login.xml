@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--Nuevo color temporal al hacer click en el boton-->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/colorPrimary">
-
-    <item android:drawable="@drawable/bg_btn"/>
-</ripple>

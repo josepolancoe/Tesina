@@ -2,13 +2,13 @@ package ga.josepolanco.mitesinaappv1.Modelos;
 
 public class ModeloReserva {
     public String anfitrion_uid, anfitrion_nombre, anfitrion_imagen, anuncio_id, anuncio_titulo, anuncio_imagen_alojamiento, anuncio_fecha, tipo_alojamiento;
-    public double anuncio_precio;
+    public String anuncio_precio;
 
     public ModeloReserva(){
 
     }
 
-    public ModeloReserva(String anfitrion_uid, String anfitrion_nombre, String anfitrion_imagen, String anuncio_id, String anuncio_titulo, String anuncio_imagen_alojamiento, String anuncio_fecha, String tipo_alojamiento, double anuncio_precio) {
+    public ModeloReserva(String anfitrion_uid, String anfitrion_nombre, String anfitrion_imagen, String anuncio_id, String anuncio_titulo, String anuncio_imagen_alojamiento, String anuncio_fecha, String tipo_alojamiento, String anuncio_precio) {
         this.anfitrion_uid = anfitrion_uid;
         this.anfitrion_nombre = anfitrion_nombre;
         this.anfitrion_imagen = anfitrion_imagen;
@@ -84,11 +84,11 @@ public class ModeloReserva {
         this.anuncio_fecha = anuncio_fecha;
     }
 
-    public double getAnuncio_precio() {
+    public String getAnuncio_precio() {
         return anuncio_precio;
     }
 
-    public void setAnuncio_precio(double anuncio_precio) {
+    public void setAnuncio_precio(String anuncio_precio) {
         this.anuncio_precio = anuncio_precio;
     }
 }

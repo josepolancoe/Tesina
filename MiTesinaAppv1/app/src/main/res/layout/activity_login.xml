@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo_degradado_3"
     android:padding="20dp"
+    android:gravity="top"
     tools:context=".LoginActivity">
 
     <TextView
@@ -15,7 +16,7 @@
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="25dp"/>
+        android:textSize="25sp"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -75,13 +76,14 @@
         android:layout_below="@id/l_btn_iniciar_sesion"/>
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleLogin"
+        android:id="@+id/googleLogin2"
         android:layout_margin="27dp"
         android:textAlignment="viewEnd"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/l_clave_olvidada"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_facebook"
@@ -91,6 +93,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_above="@+id/login_correo"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="30dp" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleLogin"
+        android:layout_margin="27dp"
+        android:textAlignment="viewEnd"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/login_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

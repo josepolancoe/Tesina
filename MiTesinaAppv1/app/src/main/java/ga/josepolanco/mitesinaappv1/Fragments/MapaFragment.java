@@ -3,6 +3,7 @@ package ga.josepolanco.mitesinaappv1.Fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -23,6 +25,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import ga.josepolanco.mitesinaappv1.AnuncioDetalleActivity;
+import ga.josepolanco.mitesinaappv1.Clases.DetalleMarcador;
 import ga.josepolanco.mitesinaappv1.Clases.MapsLanLog;
 import ga.josepolanco.mitesinaappv1.PerfilActivity;
 import ga.josepolanco.mitesinaappv1.R;
@@ -46,6 +50,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -53,7 +59,7 @@ import java.util.ArrayList;
  */
 public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private FusedLocationProviderClient mFusedLocationClient;
-    String anuncio_titulo, anuncio_tipo,detalle_tipo_alojamiento;
+    String anuncio_titulo, anuncio_tipo,detalle_tipo_alojamiento, anuncio_id="";
     double d_latitud, d_longitud;
 
     private static final int LOCATION_REQUEST_CODE = 1;
@@ -62,6 +68,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private DatabaseReference mDatabase;
     private ArrayList<Marker> tempMarkerList = new ArrayList<>();
     private ArrayList<Marker> realMarkerList = new ArrayList<>();
+
+    Map<Marker, DetalleMarcador> mMarkerMap = new HashMap<>();
+
 
     public MapaFragment() {
         // Required empty public constructor
@@ -84,7 +93,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
         mDatabase.child("Anuncios").addValueEventListener(new ValueEventListener() {
@@ -99,15 +108,53 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                     MapsLanLog mapsLanLog = snapshot.getValue(MapsLanLog.class);
                     Double latitud = mapsLanLog.getLatitud();
                     Double longitud = mapsLanLog.getLongitud();
+                    anuncio_id = snapshot.child("anuncio_id").getValue(String.class);
                     String anuncio_titulo = snapshot.child("anuncio_titulo").getValue(String.class);
                     String tipo_alojamiento = snapshot.child("tipo_alojamiento").getValue(String.class);
                     String detalle_tipo_alojamiento = snapshot.child("detalle_tipo_alojamiento").getValue(String.class);
-                    MarkerOptions markerOptions = new MarkerOptions();
+                    String anuncio_precio = snapshot.child("anuncio_precio").getValue(String.class);
+
+                    /*MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(new LatLng(latitud,longitud));
                     markerOptions.title(anuncio_titulo);
-                    markerOptions.snippet(detalle_tipo_alojamiento);
-                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_casa));
-                    tempMarkerList.add(mMap.addMarker(markerOptions));
+                    markerOptions.snippet(detalle_tipo_alojamiento+", "+anuncio_precio);
+                    if (tipo_alojamiento.equalsIgnoreCase("Casa"))
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_casa));
+                    else
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_departamento));*/
+
+                    if (tipo_alojamiento.equalsIgnoreCase("Casa")){
+                        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitud,longitud))
+                                .title(anuncio_titulo).snippet(detalle_tipo_alojamiento+", "+anuncio_precio)
+                                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_casa)));
+
+                        DetalleMarcador marcador = new DetalleMarcador(latitud, longitud, anuncio_id, anuncio_titulo, tipo_alojamiento, anuncio_precio);
+                        mMarkerMap.put(marker, marcador);
+
+                        tempMarkerList.add(marker);
+
+                    }else{
+                        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitud,longitud))
+                                .title(anuncio_titulo).snippet(detalle_tipo_alojamiento+", "+anuncio_precio)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_departamento)));
+
+                        DetalleMarcador marcador = new DetalleMarcador(latitud, longitud, anuncio_id, anuncio_titulo, tipo_alojamiento, anuncio_precio);
+                        mMarkerMap.put(marker, marcador);
+
+                        tempMarkerList.add(marker);
+                    }
+
+
+                    /*Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitud,longitud))
+                            .title(anuncio_titulo).snippet(detalle_tipo_alojamiento+", "+anuncio_precio)
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_casa)));*/
+
+                    /*DetalleMarcador marcador = new DetalleMarcador(latitud, longitud, anuncio_id, anuncio_titulo, tipo_alojamiento, anuncio_precio);
+                    mMarkerMap.put(marker, marcador);
+                    tempMarkerList.add(marker);*/
+
+
+                    //tempMarkerList.add(mMap.addMarker(marker));
                 }
                 realMarkerList.clear();
                 realMarkerList.addAll(tempMarkerList);
@@ -131,6 +178,17 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         mMap.setMyLocationEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                DetalleMarcador marcador = mMarkerMap.get(marker);
+                Intent intent = new Intent(getContext(), AnuncioDetalleActivity.class);
+                intent.putExtra("anuncio_id", marcador.getAnuncio_id());
+                Toast.makeText(getContext(), anuncio_id, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
 
         //mMap.clear(); //clear old markers
 

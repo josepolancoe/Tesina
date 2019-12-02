@@ -71,7 +71,8 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         String anuncio_titulo = modeloReservaList.get(position).getAnuncio_titulo();
         final String anuncio_imagen_alojamiento =  modeloReservaList.get(position).getAnuncio_imagen_alojamiento();
         String anuncio_fecha = modeloReservaList.get(position).getAnuncio_fecha();
-        Double anuncio_precio = modeloReservaList.get(position).getAnuncio_precio();
+        //Double anuncio_precio = modeloReservaList.get(position).getAnuncio_precio();
+        String anuncio_precio = modeloReservaList.get(position).getAnuncio_precio();
         String tipo_alojamiento = modeloReservaList.get(position).getTipo_alojamiento();
 
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -80,6 +81,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
         holder.alojamiento_titulo.setText(anuncio_titulo);
         holder.alojamiento_tipo.setText(tipo_alojamiento);
+        holder.alojamiento_precio.setText(anuncio_precio);
 
         try{
             Picasso.get().load(anfitrion_imagen).placeholder(R.drawable.img_user).into(holder.alojamiento_foto_perfil);
@@ -219,7 +221,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         pd.setMessage("Eliminando Anuncio...");
 
         //imagen eliminada, ahora elimina de la bd
-        Query query = FirebaseDatabase.getInstance().getReference("Anuncios").orderByChild(anuncio_id).equalTo(anuncio_id);
+        Query query = FirebaseDatabase.getInstance().getReference("Anuncios").orderByChild("anuncio_id").equalTo(anuncio_id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

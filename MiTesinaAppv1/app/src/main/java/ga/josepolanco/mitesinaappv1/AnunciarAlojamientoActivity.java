@@ -14,6 +14,8 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,10 +23,16 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +54,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
-public class AnunciarAlojamientoActivity extends AppCompatActivity {
+public class AnunciarAlojamientoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
 
@@ -61,6 +72,10 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
     private RadioButton rb_anunciar_departamento, rb_anunciar_casa, rb_anunciar_hotel, rb_anunciar_alojamiento_entero, rb_anunciar_habitacion_privada;
     public String rbTipo1 = "", rbTipo2 = "";
     double latitud = 0, longitud = 0;
+    String alojamiento_precio="";
+    String txt_spinner1="", txt_spiner2="";
+    String txt_checkbox1="",txt_checkbox2="",txt_checkbox3="",txt_checkbox4="",txt_checkbox5="",txt_checkbox6="",txt_checkbox7="",txt_checkbox8="";
+    String alojamiento_ubicacion="";
 
     ProgressDialog progressDialog;
 
@@ -131,6 +146,55 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
         rb_anunciar_habitacion_privada = findViewById(R.id.rb_anunciar_habitacion_privada);
         btn_anunciar_publicar2 = findViewById(R.id.btn_anunciar_publicar2);
 
+        final CheckBox cb1 = findViewById(R.id.cb_servicios_basicos);
+        final CheckBox cb2 = findViewById(R.id.cb_wifi);
+        final CheckBox cb3 = findViewById(R.id.cb_ordenador);
+        final CheckBox cb4 = findViewById(R.id.cb_tv);
+        final CheckBox cb5 = findViewById(R.id.cb_lavadora);
+        final CheckBox cb6 = findViewById(R.id.cb_cocina);
+        final CheckBox cb7 = findViewById(R.id.cb_almuerzo);
+        final CheckBox cb8 = findViewById(R.id.cb_desayuno);
+
+               Spinner spinner1 = findViewById(R.id.spinner_1);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
+                R.array.spinner_tipo_alojamiento, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter1);
+        spinner1.setOnItemSelectedListener(this);
+
+        Spinner spinner2 = findViewById(R.id.spinner_2);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.spinner_tipo_detalle, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter2);
+        spinner2.setOnItemSelectedListener(this);
+
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                if (position == getCount()) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText("");
+                    ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                }
+                return v;
+            }
+            @Override
+            public int getCount() {
+                return super.getCount()-1; // you dont display last item. It is used as hint.
+            }
+        };
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("Hola");
+        adapter.add("Cuando");
+        adapter.add("Hint to be displayed");
+
+        spinner1.setAdapter(adapter);
+        spinner1.setSelection(adapter.getCount()); //display hint
+        spinner1.setOnItemClickListener((AdapterView.OnItemClickListener) this);*/
+
         iv_anunciar_foto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +203,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
         });
         validarRb_grupo1();
         validarRb_grupo2();
+
+        onCheckboxClicked(cb1);
 
         btn_anunciar_publicar2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,11 +224,12 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                     Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el titutlo", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                String precio=anunciar_precio.getText().toString().trim();
-//                if (TextUtils.isEmpty(precio)){
-//                    Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el precio", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
+                alojamiento_precio = anunciar_precio.getText().toString().trim();
+
+                if (TextUtils.isEmpty(alojamiento_precio)){
+                    Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el precio", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (image_uri==null){
                     uploadData(titulo,"noImagen");
                 }else{
@@ -197,6 +264,15 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                     lon.setText(String.valueOf(location.getLongitude()));
                     latitud=location.getLatitude();
                     longitud=location.getLongitude();
+
+                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocation(latitud, longitud, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    alojamiento_ubicacion = addresses.get(0).getAddressLine(0);
                 }
             }
         });
@@ -236,6 +312,16 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                                 hashMap.put("detalle_tipo_alojamiento",rbTipo2);
                                 hashMap.put("latitud",latitud);
                                 hashMap.put("longitud",longitud);
+                                hashMap.put("servicio_1",txt_checkbox1);
+                                hashMap.put("servicio_2",txt_checkbox2);
+                                hashMap.put("servicio_3",txt_checkbox3);
+                                hashMap.put("servicio_4",txt_checkbox4);
+                                hashMap.put("servicio_5",txt_checkbox5);
+                                hashMap.put("servicio_6",txt_checkbox6);
+                                hashMap.put("servicio_7",txt_checkbox7);
+                                hashMap.put("servicio_8",txt_checkbox8);
+                                hashMap.put("anuncio_precio","S/. "+alojamiento_precio+" por noche");
+                                hashMap.put("anuncio_ubicacion",alojamiento_ubicacion);
 
                                 //publicamos archivo
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");
@@ -272,7 +358,9 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                 }
             });
         }else{
-            HashMap<Object, Object> hashMap = new HashMap<>();
+            Toast.makeText(this, "El anuncio debe contener una imagen del alojamiento", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+/*            HashMap<Object, Object> hashMap = new HashMap<>();
             hashMap.put("anfitrion_uid",uid);
             hashMap.put("anfitrion_nombre",nombre);
             hashMap.put("anfitrion_correo",correo);
@@ -309,8 +397,7 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(AnunciarAlojamientoActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            });
-
+            });*/
         }
     }
 
@@ -491,4 +578,101 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        int idSpinner = parent.getId();
+
+        switch(idSpinner) {
+            case R.id.spinner_1:
+                txt_spinner1 = parent.getItemAtPosition(position).toString();
+                Toast.makeText(this, ""+txt_spinner1, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.spinner_2:
+                txt_spiner2 = parent.getItemAtPosition(position).toString();
+                Toast.makeText(this, ""+txt_spiner2, Toast.LENGTH_SHORT).show();
+                break;
+
+            }
+        }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(this, "Seleccione una opcion", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.cb_servicios_basicos:
+                if (checked){
+                    txt_checkbox1 = "Servicios Básicos";
+                    Toast.makeText(this, ""+txt_checkbox1, Toast.LENGTH_SHORT).show();
+                }
+            else
+                txt_checkbox1="";
+                break;
+            case R.id.cb_wifi:
+                if (checked){
+                    txt_checkbox2 = "Wi-fi";
+                    Toast.makeText(this, ""+txt_checkbox2, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox2="";
+                break;
+            case R.id.cb_ordenador:
+                if (checked){
+                    txt_checkbox3 = "Ordenador";
+                    Toast.makeText(this, ""+txt_checkbox3, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox3="";
+                break;
+            case R.id.cb_tv:
+                if (checked){
+                    txt_checkbox4 = "TV";
+                    Toast.makeText(this, ""+txt_checkbox4, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox4="";
+                break;
+            case R.id.cb_lavadora:
+                if (checked){
+                    txt_checkbox5 = "Lavadora";
+                    Toast.makeText(this, ""+txt_checkbox5, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox5="";
+                break;
+            case R.id.cb_cocina:
+                if (checked){
+                    txt_checkbox6 = "Cocina";
+                    Toast.makeText(this, ""+txt_checkbox6, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox6="";
+                break;
+            case R.id.cb_almuerzo:
+                if (checked){
+                    txt_checkbox7 = "Almuerzo";
+                    Toast.makeText(this, ""+txt_checkbox7, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox7="";
+                break;
+            case R.id.cb_desayuno:
+                if (checked){
+                    txt_checkbox8 = "Desayuno";
+                    Toast.makeText(this, ""+txt_checkbox8, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    txt_checkbox8="";
+                break;
+            // TODO: Veggie sandwich
+        }
+    }
+
 }
