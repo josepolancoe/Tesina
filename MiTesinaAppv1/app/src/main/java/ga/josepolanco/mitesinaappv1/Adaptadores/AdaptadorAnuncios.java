@@ -74,6 +74,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         //Double anuncio_precio = modeloReservaList.get(position).getAnuncio_precio();
         String anuncio_precio = modeloReservaList.get(position).getAnuncio_precio();
         String tipo_alojamiento = modeloReservaList.get(position).getTipo_alojamiento();
+        String anuncio_estado = modeloReservaList.get(position).getAnuncio_estado();
 
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(Long.parseLong(anuncio_fecha));

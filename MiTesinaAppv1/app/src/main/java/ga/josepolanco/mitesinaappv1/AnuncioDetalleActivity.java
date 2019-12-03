@@ -30,6 +30,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
     //obtenemos los detalles del usuario y el anuncio
     String anfitrion_uid, anfitrion_nombre, anfitrion_correo, anfitrion_imagen,
             anuncio_id, anuncio_titulo, anuncio_imagen_alojamiento, anuncio_fecha, detalle_tipo_alojamiento, tipo_alojamiento;
+    String anuncio_precio_formato;
 
     ImageView anuncio_detalle_foto_perfil,anuncio_detalle_imagen_alojamiento;
     ImageButton alojamiento_opciones;
@@ -38,7 +39,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
     TextView txt_servicios_basicos, txt_servicio_wifi, txt_servicio_cocina,txt_servicio_ordenador,txt_servicio_almuerzo,
             txt_servicio_tv, txt_servicio_desayuno, txt_servicio_lavadora, txt_tipo_alojamiento;
 
-    Button btn_contactar_anuncio_detalle, btn_anuncio_reseñas;
+    Button btn_contactar_anuncio_detalle, anuncio_detalle_btnReservar;
     LinearLayout anuncioDetalleLayout;
 
     @Override
@@ -72,6 +73,8 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
 
         txt_tipo_alojamiento = findViewById(R.id.txt_tipo_alojamiento);
 
+        anuncio_detalle_btnReservar = findViewById(R.id.anuncio_detalle_btnReservar);
+
         cargarAnuncioDetalle();
 
         btn_contactar_anuncio_detalle.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +87,18 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
             }
         });
 
+        anuncio_detalle_btnReservar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("anuncio_id", anuncio_id);
+                intent.putExtra("anfitrion_uid",anfitrion_uid);
+                intent.putExtra("anfitrion_nombre",anfitrion_nombre);
+                intent.putExtra("anuncio_precio_formato",anuncio_precio_formato);
+                getApplicationContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -108,6 +123,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
 
                     //Anuncio
                     String Aprecio = "" + snapshot.child("anuncio_precio").getValue();
+                    anuncio_precio_formato = ""+snapshot.child("anuncio_precio_formato").getValue();
                     String Aubicacion = ""+snapshot.child("anuncio_ubicacion").getValue();
 
 

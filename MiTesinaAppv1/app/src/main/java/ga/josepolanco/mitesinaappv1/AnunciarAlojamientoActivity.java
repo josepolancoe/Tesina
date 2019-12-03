@@ -72,7 +72,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity implements Ad
     private RadioButton rb_anunciar_departamento, rb_anunciar_casa, rb_anunciar_hotel, rb_anunciar_alojamiento_entero, rb_anunciar_habitacion_privada;
     public String rbTipo1 = "", rbTipo2 = "";
     double latitud = 0, longitud = 0;
-    String alojamiento_precio="";
+    String alojamiento_precio="", anuncio_estado="Disponible";
+    String anuncio_precio_formato;
     String txt_spinner1="", txt_spiner2="";
     String txt_checkbox1="",txt_checkbox2="",txt_checkbox3="",txt_checkbox4="",txt_checkbox5="",txt_checkbox6="",txt_checkbox7="",txt_checkbox8="";
     String alojamiento_ubicacion="";
@@ -225,6 +226,8 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity implements Ad
                     return;
                 }
                 alojamiento_precio = anunciar_precio.getText().toString().trim();
+                //anuncio_precio_formato = Double.parseDouble(anunciar_precio.getText().toString());
+                anuncio_precio_formato = anunciar_precio.getText().toString().trim();
 
                 if (TextUtils.isEmpty(alojamiento_precio)){
                     Toast.makeText(AnunciarAlojamientoActivity.this, "Ingrese el precio", Toast.LENGTH_SHORT).show();
@@ -321,7 +324,9 @@ public class AnunciarAlojamientoActivity extends AppCompatActivity implements Ad
                                 hashMap.put("servicio_7",txt_checkbox7);
                                 hashMap.put("servicio_8",txt_checkbox8);
                                 hashMap.put("anuncio_precio","S/. "+alojamiento_precio+" por noche");
+                                hashMap.put("anuncio_precio_formato", anuncio_precio_formato);
                                 hashMap.put("anuncio_ubicacion",alojamiento_ubicacion);
+                                hashMap.put("anuncio_estado",anuncio_estado);
 
                                 //publicamos archivo
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Anuncios");

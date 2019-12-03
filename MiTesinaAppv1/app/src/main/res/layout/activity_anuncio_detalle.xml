@@ -347,11 +347,11 @@
                             android:drawableLeft="@drawable/ic_mensaje_custom"/>
 
                         <Button
-                            android:id="@+id/anuncio_detalle_btnReseñas"
+                            android:id="@+id/anuncio_detalle_btnReservar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Ver todas las reseñas"
-                            android:drawableLeft="@drawable/ic_ver_custom" />
+                            android:text=" Reservar"
+                            android:drawableLeft="@drawable/ic_payment_custom_24dp" />
 
                     </LinearLayout>
 
