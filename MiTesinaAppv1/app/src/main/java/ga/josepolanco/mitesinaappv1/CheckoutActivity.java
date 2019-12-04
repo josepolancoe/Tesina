@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CheckoutActivity extends AppCompatActivity {
-    EditText txt_checkoutPrecio;
+    EditText txt_checkoutPrecioSoles, txt_checkoutPrecioDolares;
     Button btn_realizarPago;
     LinearLayout group_payment;
 
@@ -51,6 +51,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     String token, amount;
     String anfitrion_uid, anfitrion_nombre, anuncio_id, anuncio_precio_formato, anuncio_estado ="Reservado";
+    double precio_pagar;
     HashMap<String, String> paramsHash;
     DatabaseReference mDatabase;
 
@@ -59,7 +60,8 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        txt_checkoutPrecio = findViewById(R.id.txt_checkoutPrecio);
+        txt_checkoutPrecioSoles = findViewById(R.id.txt_checkoutPrecioSoles);
+        txt_checkoutPrecioDolares = findViewById(R.id.txt_checkoutPrecioDolares);
         btn_realizarPago = findViewById(R.id.btn_realizarPago);
 
         group_payment = findViewById(R.id.group_payment);
@@ -69,7 +71,12 @@ public class CheckoutActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         anuncio_id = intent.getStringExtra("anuncio_id");
-        Toast.makeText(this, anuncio_id, Toast.LENGTH_SHORT).show();
+        anuncio_precio_formato = intent.getStringExtra("anuncio_precio_formato");
+        txt_checkoutPrecioSoles.setText(anuncio_precio_formato);
+        double convertidorUSD = Double.parseDouble(anuncio_precio_formato) * 0.30;
+        anuncio_precio_formato = String.valueOf(convertidorUSD);
+        txt_checkoutPrecioDolares.setText(anuncio_precio_formato);
+        //Toast.makeText(this, anuncio_id, Toast.LENGTH_SHORT).show();
 
         new CheckoutActivity.getToken().execute();
 
@@ -88,7 +95,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void submitPayment(){
-        String payValue = txt_checkoutPrecio.getText().toString();
+        String payValue = txt_checkoutPrecioDolares.getText().toString();
         if(!payValue.isEmpty())
         {
             DropInRequest dropInRequest=new DropInRequest().clientToken(token);
@@ -182,7 +189,7 @@ public class CheckoutActivity extends AppCompatActivity {
             super.onPreExecute();
             mDailog=new ProgressDialog(CheckoutActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
             mDailog.setCancelable(false);
-            mDailog.setMessage("Loading Wallet, Please Wait");
+            mDailog.setMessage("Cargando cartera, Espere por favor");
             mDailog.show();
         }
 
@@ -197,12 +204,12 @@ public class CheckoutActivity extends AppCompatActivity {
         if(requestCode== REQUEST_CODE){
             if(resultCode==RESULT_OK)
             {
-                DropInResult result=data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
+                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 PaymentMethodNonce nonce= result.getPaymentMethodNonce();
                 String strNounce=nonce.getNonce();
-                if(!txt_checkoutPrecio.getText().toString().isEmpty())
+                if(!txt_checkoutPrecioDolares.getText().toString().isEmpty())
                 {
-                    amount=txt_checkoutPrecio.getText().toString();
+                    amount=txt_checkoutPrecioDolares.getText().toString();
                     paramsHash=new HashMap<>();
                     paramsHash.put("amount",amount);
                     paramsHash.put("nonce",strNounce);

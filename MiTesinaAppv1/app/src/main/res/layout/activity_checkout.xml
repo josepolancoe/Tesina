@@ -27,20 +27,32 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
+        <EditText
+            android:id="@+id/txt_checkoutPrecioDolares"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/caja_precioCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:hint="Precio del alojamiento en Soles (S/.)"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_checkoutPrecio"
+                android:id="@+id/txt_checkoutPrecioSoles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:drawableStart="@drawable/ic_payment_light_24dp"
-                android:hint=" Precio del alojamiento"/>
+                android:editable="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"
+                android:gravity="center"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
