@@ -185,7 +185,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 DetalleMarcador marcador = mMarkerMap.get(marker);
                 Intent intent = new Intent(getContext(), AnuncioDetalleActivity.class);
                 intent.putExtra("anuncio_id", marcador.getAnuncio_id());
-                Toast.makeText(getContext(), anuncio_id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), anuncio_id, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });

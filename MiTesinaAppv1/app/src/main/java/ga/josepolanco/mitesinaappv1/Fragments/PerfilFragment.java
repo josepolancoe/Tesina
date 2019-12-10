@@ -52,6 +52,7 @@ import java.util.HashMap;
 import ga.josepolanco.mitesinaappv1.AnunciarAlojamientoActivity;
 import ga.josepolanco.mitesinaappv1.MainActivity;
 import ga.josepolanco.mitesinaappv1.R;
+import ga.josepolanco.mitesinaappv1.SliderActivity;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
@@ -131,6 +132,15 @@ public class PerfilFragment extends Fragment {
             }
         });
         pd = new ProgressDialog(getActivity());
+
+        CardView card03 = view.findViewById(R.id.card03);
+        card03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SliderActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Query query = databaseReference.orderByChild("correo").equalTo(firebaseUser.getEmail());
         query.addValueEventListener(new ValueEventListener() {

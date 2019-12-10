@@ -83,11 +83,19 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
         holder.alojamiento_titulo.setText(anuncio_titulo);
         holder.alojamiento_tipo.setText(tipo_alojamiento);
         holder.alojamiento_precio.setText(anuncio_precio);
+        holder.alojamiento_estado.setText(anuncio_estado);
+
 
         try{
             Picasso.get().load(anfitrion_imagen).placeholder(R.drawable.img_user).into(holder.alojamiento_foto_perfil);
         }catch(Exception e){
 
+        }
+
+        if (anuncio_estado.equalsIgnoreCase("Reservado")){
+            holder.reserva_alojamiento_card_view.setVisibility(View.GONE);
+        }else{
+            holder.reserva_alojamiento_card_view.setVisibility(View.VISIBLE );
         }
 
         if (anuncio_imagen_alojamiento.equals("noImagen")){
@@ -247,7 +255,7 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
     public static class MyHolder extends RecyclerView.ViewHolder{
         ImageView alojamiento_foto_perfil,alojamiento_imagen;
-        TextView alojamiento_tipo,alojamiento_titulo,alojamiento_precio;
+        TextView alojamiento_tipo,alojamiento_titulo,alojamiento_precio, alojamiento_estado;
         ImageButton alojamiento_opciones;
 
         CardView reserva_alojamiento_card_view;
@@ -267,6 +275,8 @@ public class AdaptadorAnuncios extends RecyclerView.Adapter<AdaptadorAnuncios.My
 
             anuncio_acceder = itemView.findViewById(R.id.anuncio_acceder);
             anuncio_enviar_mensaje = itemView.findViewById(R.id.anuncio_enviar_mensaje);
+
+            alojamiento_estado = itemView.findViewById(R.id.alojamiento_estado);
 
 
 

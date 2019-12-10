@@ -30,11 +30,13 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
     //obtenemos los detalles del usuario y el anuncio
     String anfitrion_uid, anfitrion_nombre, anfitrion_correo, anfitrion_imagen,
             anuncio_id, anuncio_titulo, anuncio_imagen_alojamiento, anuncio_fecha, detalle_tipo_alojamiento, tipo_alojamiento;
-    String anuncio_precio_formato;
+    String anuncio_precio_formato, anuncio_estado;
 
     ImageView anuncio_detalle_foto_perfil,anuncio_detalle_imagen_alojamiento;
     ImageButton alojamiento_opciones;
-    TextView anuncio_detalle_tipo_alojamiento_descripcion,anuncio_detalle_titulo_alojamiento,anuncio_detalle_anfitrion_nombre,anuncio_detalle_precio,anuncio_detalle_tipo_alojamiento,txt_ubicacion_alojamiento,anuncio_detalle_servicios_comentarios;
+    TextView anuncio_detalle_tipo_alojamiento_descripcion,anuncio_detalle_titulo_alojamiento,anuncio_detalle_anfitrion_nombre,
+            anuncio_detalle_precio,anuncio_detalle_tipo_alojamiento,txt_ubicacion_alojamiento,anuncio_detalle_servicios_comentarios,
+            anuncio_detalle_alojamiento_estado;
 
     TextView txt_servicios_basicos, txt_servicio_wifi, txt_servicio_cocina,txt_servicio_ordenador,txt_servicio_almuerzo,
             txt_servicio_tv, txt_servicio_desayuno, txt_servicio_lavadora, txt_tipo_alojamiento;
@@ -60,6 +62,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
         anuncio_detalle_anfitrion_nombre=findViewById(R.id.anuncio_detalle_anfitrion_nombre);
         txt_ubicacion_alojamiento=findViewById(R.id.txt_ubicacion_alojamiento);
         btn_contactar_anuncio_detalle = findViewById(R.id.btn_contactar_anuncio_detalle);
+        anuncio_detalle_alojamiento_estado = findViewById(R.id.anuncio_detalle_alojamiento_estado);
 
         //TextView Servicios Alojamiento
         txt_servicios_basicos = findViewById(R.id.txt_servicios_basicos);
@@ -125,6 +128,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
                     String Aprecio = "" + snapshot.child("anuncio_precio").getValue();
                     anuncio_precio_formato = ""+snapshot.child("anuncio_precio_formato").getValue();
                     String Aubicacion = ""+snapshot.child("anuncio_ubicacion").getValue();
+                     anuncio_estado = ""+snapshot.child("anuncio_estado").getValue();
 
 
                     //Servicios Alojamiento
@@ -200,6 +204,7 @@ public class AnuncioDetalleActivity extends AppCompatActivity {
 
                     anuncio_detalle_anfitrion_nombre.setVisibility(View.VISIBLE);
                     Picasso.get().load(AdImagenAnfitrion).into(anuncio_detalle_foto_perfil);
+                    anuncio_detalle_alojamiento_estado.setText(anuncio_estado);
 
                     if (AdImagenAlojamiento.equals("noImagen")){
                         anuncio_detalle_imagen_alojamiento.setVisibility(View.GONE);

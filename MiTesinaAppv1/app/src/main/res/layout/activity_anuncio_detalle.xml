@@ -124,6 +124,12 @@
                                 android:numStars="5"
                                 android:rating="4.5"
                                 android:stepSize="0.5" />
+
+                            <TextView
+                                android:id="@+id/anuncio_detalle_alojamiento_estado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Estado"/>
                         </LinearLayout>
 
                     </LinearLayout>
